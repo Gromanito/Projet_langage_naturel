@@ -1,0 +1,43 @@
+
+
+Dans l'ordre des étapes qu'on doit faire
+
+
+L'utilisateur rentre 
+objet1   relation   objet2
+
+"objet" peut être soit un sujet, une entité (chat, chien, pigeon...)
+ 		  soit un verbe, une action (griffer, aboyer, faire caca partout)
+
+relation est une des 200 relations (ou 300, bref y a pas "tant" de relation que ça) qui existent déjà
+les relation à la limite on peut toutes les récup ça doit pas être un problème
+
+
+les étapes:
+récupérer ce que l'utilisateur a rentré
+(il faut réussir à convertir les "objets", les strings que l'user a entrées en identifiants qu'utilisent jeuxDeMots
+il faut aussi regarder si on a bien le fichier qui contient tous les noeuds entrants/sortants des objets (donc faut les télécharger) 
+
+
+
+
+pour la structure des données
+à chaque fois l'utilisateur entre un nom en langage naturel et faut convertir en id
+donc je dirai pour les objets faudrait un dico "nom" -> identifiant
+
+
+ensuite faut que je puisse récup à partir de l'id et de la relation 
+
+ou alors je fais plein de dico pour chaque relation
+par exemple la relation "is_a" c'est un dico
+qui à un identifiant x  renvoie la liste de tous les y tels que x is_a  y
+(et on laisse gérer python)
+
+
+dooonc on pourrait presque avoir
+une liste de dico des relations
+
+c'est à dire, on considère les relations comme des dico, et vu qu'y a plusieurs relation (r_isa, r_agent, r_agent-1, r_raf_sem ...)
+et on peut faire un dico de dico
+
+
