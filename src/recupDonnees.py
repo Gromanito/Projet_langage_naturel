@@ -1,62 +1,134 @@
 import requests
-from bs4 import BeautifulSoup
+import json
+from typing import List
 import os
 
 
 
 
-"""
-récupère les données des fichiers json pour pouvoir les manipuler facilement
+# """
+# récupère les données des fichiers json pour pouvoir les manipuler facilement
 
 
 
-"""
+# """
 
 
 
-def recupBaseBrut(nom, convertirEnJson=False):
+def takeRawData(word: str, storageDir="res/fichierExploitables") -> str:
+    url = 'https://www.jeuxdemots.org/rezo-dump.php?gotermsubmit=Chercher&gotermrel='+word+'&rel='
+    response = requests.get(url)
+    
+    dir_name = storageDir+"/"+word
+    file_name = storageDir+"/"+word+"/"+word+".txt"
+    
+    if os.path.exists(dir_name):
+        print("Ce mot est déjà enregistré")
+        return None
+    else:
+        os.makedirs(dir_name)
 
-	"récupère le texte et l'enregistre tel quel en txt pour pas avoir à le retélécharger"
+    if response.status_code == 200:
+        with open(file_name, 'w', encoding='utf-8') as fichier:
+            fichier.write(response.text)
+            print("Contenu enregistré dans le fichier "+file_name)
+            
+        return file_name
+    else:
+        print("La requête a échoué avec le code :", response.status_code)
+        return None
 
-	nom_fichier = "src/fichierBruts/"+nom+".txt"
 
-	if os.path.exists(nom_fichier):
-		print("Le fichier existe déjà.")
-		return
+def manageData(word: str, storageDir="res/fichierExploitables") :
+    e_word_file = None
+    r_word_file = None
+        
+    e_word_file = open(storageDir+'/'+word+'/e.json', 'w', encoding='utf-8')
+    r_word_file = open(storageDir+'/'+word+'/r.json', 'w', encoding='utf-8') 
+    
+    e_word_file.write("[\n")
+    r_word_file.write("[\n")
 
-	# URL de la page à récupérer
-	url = "https://www.jeuxdemots.org/rezo-dump.php?gotermsubmit=Chercher&gotermrel=" + matou + "&rel="
+    with open(storageDir+'/'+word+'/'+word+'.txt', 'r', encoding='utf-8') as file :
+        e_data = ""
+        r_data = ""
+        for line in file :
+            data = line.split(';')
+            label = label_data_json(data[0])
 
-	# Effectuer la requête HTTP pour récupérer le contenu de la page
-	response = requests.get(url)
+            if (label != None) :
+                dictionnaire = {
+                    label[idx]: manage_value(data[idx+1]) for idx in range(min(len(label),len(data)-1))
+                }
+                json_string = json.dumps(dictionnaire, ensure_ascii=False)
+                if (data[0] == 'e') :
+                    e_data += " "+json_string+',\n'
+                elif (data[0] == 'r') :
+                    r_data += " "+json_string+',\n'
 
-	# Vérifier si la requête a réussi (code de statut 200)
-	if response.status_code == 200:
-		# Parser le contenu HTML de la page
-		soup = BeautifulSoup(response.text, 'html.parser')
-		
-		# Trouver toutes les balises <CODE>
-		code_tags = soup.find('CODE')
-		
-		code_text = code_tag.get_text()
 
-		
-		with open(nom_fichier, 'w') as fichier:
-			fichier.write(texte)
-			print("fichier enregistré")
+        e_word_file.write(e_data[:-2]+'\n]')
+        r_word_file.write(r_data[:-2]+'\n]')
 
+def label_data_json(prefix_data: str) -> List[str]:
+    if prefix_data == 'e' :
+        return ['eid','name','type','w','formated' 'name']
+    elif prefix_data == 'r' :
+        return ['rid','node1','node2','type','w','w_normed','rank']  
+    else : return None
+    
+def manage_value(value: str) -> str :
+    managed_value = value.replace("'","")
+    managed_value = managed_value.replace("\n","")
+    try :
+        managed_value = int(managed_value)
+    except :
+        pass
+    return managed_value
+
+
+def dispatch_RToJSON(word: str, pathToRTJSON: str, storageDir="res/fichierExploitables") -> bool:
+
+    try :
+        rt_data = None
+        r_data = None
+        with open(pathToRTJSON, "r", encoding="utf-8") as rt:
+            rt_data = json.load(rt)
 			
-	else:
-		print("Erreur lors de la requête HTTP:", response.status_code)
+        rt_dico = {}
+        for rt in rt_data :
+            rt_dico[rt["rtid"]] = rt["trname"]
 
-
-
-def recup
-
-
+        with open(storageDir+'/'+word+'/'+'r.json', 'r', encoding='utf-8') as relations :
+            r_data = json.load(relations)
             
+        for rt in rt_data :
+            with open(storageDir+'/'+word+'/'+rt["trname"].replace("/","_")+".json", 'w', encoding='utf-8') as f :
+                f.write("[\n")
             
+        for r in r_data :
+            r_type = rt_dico[r["type"]]
+            r_type = r_type.replace("/","_") # y a une relation qui s'appelle "r_meaning/glose". Ça fait un bug ... donc ...
+
+            with open(storageDir+'/'+word+'/'+r_type+".json", "a") as f:
+                f.writelines(" "+json.dumps(r, ensure_ascii=False)+',\n')
+        
+        for rt in rt_data :
+            content = None
+            with open(storageDir+'/'+word+'/'+rt["trname"].replace("/","_")+".json", 'r', encoding='utf-8') as f :
+                content = f.read()
+            
+            with open(storageDir+'/'+word+'/'+rt["trname"].replace("/","_")+".json", 'w', encoding='utf-8') as f :
+                f.write(content[:-2]+'\n]')
+
+        return True 
+    
+    except Exception as e:
+        print("Une erreur s'est produite :", e)        
+        return False            
 
 	
 
-
+#takeRawData("chien")
+#manageData("chien")
+dispatch_RToJSON("chien","res/fichierExploitables/rt.json")
