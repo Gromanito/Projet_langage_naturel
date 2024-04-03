@@ -60,7 +60,7 @@ def json_vers_exploitable(nomTerme):
         r_has_part = {"contient":{}, "estContenuDans":{}}
         r_agent = {"agents":{}, "actions":{}}
         r_agent_1 = {"agents":{}, "actions":{}}
-        r_lieu = {"estInclusDans":{}, "inclus":{}}
+        r_lieu = {"seSitueDans":{}, "estSitueDans":{}}
         #r_syn = {}
          # on en ajoutera d'autres + tard si besoin (j'ai vu processus agent-1,  id 137, il peut être pas mal)
 
@@ -94,6 +94,11 @@ def json_vers_exploitable(nomTerme):
                     else:
                         r_agent_1["agents"][elementJson["node1"]] = {"weight" : elementJson["weight"],  "weight_normed" : elementJson["weight_normed"]}
 
+                case 15: #r_lieu  ((carotte r_lieu potager))
+                    if elementJson["node1"] == idTerme:
+                        r_lieu["seSitueDans"][elementJson["node2"]] = {"weight" : elementJson["weight"],  "weight_normed" : elementJson["weight_normed"]}
+                    else:
+                        r_lieu["estSitueDans"][elementJson["node1"]] = {"weight" : elementJson["weight"],  "weight_normed" : elementJson["weight_normed"]}
 
                 #on fera les autres + tards
 
@@ -109,7 +114,7 @@ def json_vers_exploitable(nomTerme):
                 print( nomRelation + " enregistrée")
 
 
-json_vers_exploitable("matou")
+json_vers_exploitable("Paris")
 
 
 
