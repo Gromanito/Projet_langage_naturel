@@ -187,7 +187,28 @@ def enregistrer_en_json(nomFichier, texteBrut):
 		fichier.write(objet_json)
 		print("fichier json enregistré")
 
+def recupExploitable(Terme: str, edges: dict) -> dict:
+    
+    returnedDict = {}
 
+    filePath = "res/fichiersExploitables/"+Terme+"/"
+    with open(filePath+"e.json", "r", encoding="utf-8") as e_file :
+        current_term_edges = json.load(e_file)
+        
+        for key, value in current_term_edges.items() :
+            if isinstance(key, int):
+                if edges.get(key) is None :
+                    edges[key] = value
+    
+    r_filesName = os.listdir(filePath)
+    r_filesName.remove("e.json")
+    for r_fileName in r_filesName :
+        with open(filePath+r_fileName, "r", encoding="utf-8") as r_file :
+            key = r_fileName.split('.')[0]
+
+            returnedDict[key] = json.load(r_file)
+
+    return returnedDict
 
 """
 on s'en sert une fois pour toutes les relations mais maintenant on s'en fout

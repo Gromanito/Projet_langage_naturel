@@ -139,6 +139,6 @@ def dispatch_RToJSON(word: str, pathToRTJSON: str, storageDir="res/fichierExploi
 
     
 
-#takeRawData("chien")
+takeRawData("Paris")
 #manageData("chien")
 #dispatch_RToJSON("chien","res/fichierExploitables/rt.json")
