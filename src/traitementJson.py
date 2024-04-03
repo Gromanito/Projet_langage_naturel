@@ -196,9 +196,12 @@ def recupExploitable(Terme: str, edges: dict) -> dict:
         current_term_edges = json.load(e_file)
         
         for key, value in current_term_edges.items() :
-            if isinstance(key, int):
-                if edges.get(key) is None :
-                    edges[key] = value
+            try :
+                intKey = int(key)
+                if edges.get(intKey) is None :
+                    edges[intKey] = value
+            except :
+                pass
     
     r_filesName = os.listdir(filePath)
     r_filesName.remove("e.json")
@@ -258,3 +261,7 @@ def ntjson_vers_dictionnaire_nom_ntid(nomTerme):
 
 
 """
+
+e = {}
+recupExploitable("Paris",e)
+print(e)
