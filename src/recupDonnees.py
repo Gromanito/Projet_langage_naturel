@@ -59,6 +59,10 @@ def manageData(word: str, storageDir="res/fichierExploitables") :
     e_word_file.write("[\n")
     r_word_file.write("[\n")
 
+
+
+
+
     with open(storageDir+'/'+word+'/'+word+'.txt', 'r', encoding='utf-8') as file :
         e_data = ""
         r_data = ""
@@ -139,6 +143,6 @@ def dispatch_RToJSON(word: str, pathToRTJSON: str, storageDir="res/fichierExploi
 
     
 
-#takeRawData("chien")
+takeRawData("griffer")
 #manageData("chien")
 #dispatch_RToJSON("chien","res/fichierExploitables/rt.json")

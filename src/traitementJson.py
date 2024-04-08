@@ -114,79 +114,101 @@ def json_vers_exploitable(nomTerme):
                 print( nomRelation + " enregistrée")
 
 
-json_vers_exploitable("Paris")
+
+
 
 
 
 def enregistrer_en_json(nomFichier, texteBrut):
-	"""Enregistre la chaine brute de la page du terme au format json 
-	   pour pouvoir manipuler + facilement
-	"""
+    """Enregistre la chaine brute de la page du terme au format json 
+       pour pouvoir manipuler + facilement
+    """
 
-	edges=[]
-	relations=[]
+    edges=[]
+    relations=[]
 
-	#on recherche l'id de ce qu'on cherche (première ligne du texte, 
-	#au lieu de regarde chaque noeud et faire des if)
-	#(le code est horrible tkt)
-	
-	ligneQuiContientLid = texteBrut[texteBrut.find("(eid="):  texteBrut.find("(eid=") + 30 ]
-	idTerme = int(ligneQuiContientLid[ligneQuiContientLid.find("(eid=") + 5 : ligneQuiContientLid.find(')')])
+    #on recherche l'id de ce qu'on cherche (première ligne du texte, 
+    #au lieu de regarde chaque noeud et faire des if)
+    #(le code est horrible tkt)
+    
+    ligneQuiContientLid = texteBrut[texteBrut.find("(eid="):  texteBrut.find("(eid=") + 30 ]
+    idTerme = int(ligneQuiContientLid[ligneQuiContientLid.find("(eid=") + 5 : ligneQuiContientLid.find(')')])
 
-	for ligne in texteBrut.splitlines():
-		if ligne.startswith('e;'):
-			elements = ligne.strip().split(';')
-			identifiant = int(elements[1])
-			nom = elements[2][1:-1]  # Supprimer les guillemets autour du nom
-			type_noeud = int(elements[3])
-			weight = int(elements[4])
-			formated_name = None
-			if len(elements) == 6:
-				formated_name =  elements[5][1:-1]
-			
-			edges.append({"id":identifiant, 
-							"name":nom, 
-							"node_type":type_noeud, 
-							"weight":weight, 
-							"formated_name":formated_name })
-		
-		elif ligne.startswith('r;'):
-			
-			elements = ligne.strip().split(';')
-			identifiant = int(elements[1])
-			node1 = int(elements[2])
-			node2 = int(elements[3])
-			type_relation = int(elements[4])
-			weight = int(elements[5])
-			weight_normed = None
-			rank = None
+    for ligne in texteBrut.splitlines():
+        if ligne.startswith('e;'):
+            ligne = ligne.strip()
+            
+            nom, ligne = renvoieNameApartirDuneLigne(ligne)
 
-			if len(elements) > 6: #cas où c'est les noeuds sortants
-				
-				if elements[6] != '-':
-					weight_normed =  float(elements[6])
+            formated_name = None
+            if ligne.find("';") != -1:
+                formated_name, ligne = renvoieNameApartirDuneLigne(ligne)
 
-				if elements[7].strip() != '-':
-					rank =  int(elements[7])
+            elements = ligne.split(';') 
+            identifiant = int(elements[1])
 
-			
-			relations.append({  "id":identifiant, 
-								"node1":node1, 
-								"node2":node2, 
-								"type":type_relation, 
-								"weight":weight,
-								"weight_normed": weight_normed,
-								"rank": rank })
-	
-	#après la boucle for
-	dico = { "id":idTerme, "r":relations, "e":edges}
-	objet_json = json.dumps(dico, indent=4, ensure_ascii=False)
+            type_noeud = int(elements[2])
+            weight = int(elements[3])
+            
+            
+            edges.append({"id":identifiant, 
+                            "name":nom, 
+                            "node_type":type_noeud, 
+                            "weight":weight, 
+                            "formated_name":formated_name })
+        
+        elif ligne.startswith('r;'):
+            
+            elements = ligne.strip().split(';')
+            identifiant = int(elements[1])
+            node1 = int(elements[2])
+            node2 = int(elements[3])
+            type_relation = int(elements[4])
+            weight = int(elements[5])
+            weight_normed = None
+            rank = None
 
-	nom_fichier_json = "res/fichiersTraites/"+nomFichier+".json"
-	with open(nom_fichier_json, 'w') as fichier:
-		fichier.write(objet_json)
-		print("fichier json enregistré")
+            if len(elements) > 6: #cas où c'est les noeuds sortants
+                
+                if elements[6] != '-':
+                    weight_normed =  float(elements[6])
 
+                if elements[7].strip() != '-':
+                    rank =  int(elements[7])
+
+            
+            relations.append({  "id":identifiant, 
+                                "node1":node1, 
+                                "node2":node2, 
+                                "type":type_relation, 
+                                "weight":weight,
+                                "weight_normed": weight_normed,
+                                "rank": rank })
+    
+    #après la boucle for
+    dico = { "id":idTerme, "r":relations, "e":edges}
+    objet_json = json.dumps(dico, indent=4, ensure_ascii=False)
+
+    nom_fichier_json = "res/fichiersTraites/"+nomFichier+".json"
+    with open(nom_fichier_json, 'w') as fichier:
+        fichier.write(objet_json)
+        print("fichier json enregistré")
+
+
+
+def renvoieNameApartirDuneLigne(ligne):
+    indexDebut = ligne.find(";'")
+    indexFin = ligne.find("';")
+    name = ligne[indexDebut+2 : indexFin]
+    nouvelleLigne = ligne[0 : indexDebut] + ligne[indexFin+1 :]
+    return name, nouvelleLigne
+
+
+"""
+with open("res/fichiersBruts/chien.txt", 'r') as fichier:
+            enregistrer_en_json("chien", fichier.read())
+            print("pitié")
+"""
 
 
 """
@@ -213,8 +235,8 @@ dico = rtjson_vers_dictionnaire_nom_rtid("res/fichiersTraitesJson/rt.json")
 dicoJson = json.dumps(dico, indent=4)
 
 with open("res/fichiersExploitables/rt.json", 'w') as fichier:
-			fichier.write(dicoJson)
-			print("fichier enregistré")
+            fichier.write(dicoJson)
+            print("fichier enregistré")
 
 
 
@@ -237,3 +259,9 @@ def ntjson_vers_dictionnaire_nom_ntid(nomTerme):
 
 
 """
+
+
+
+
+
+json_vers_exploitable("matou")

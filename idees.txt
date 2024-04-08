@@ -77,3 +77,17 @@ res/fichiersExploitables/matou/r_haspart.json
 ces fichiers json sont des listes (qui contiennent tous les trucs quoi jsp)
 et quand j'en ai besoin j'ajoute dans r_isa dico
 une clé "matou" et une liste : [le fichier /matou/r_isa.json   ]
+
+
+
+
+
+Les données peuvent "périmer" (des nouveaux noeuds ont été créé, faut refetch le fichier du coup)
+
+
+
+
+R_has_part-1    c'est  r_holo
+
+
+pour r_isa et r_sym,  faire attention à la polysémie
