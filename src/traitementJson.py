@@ -211,6 +211,29 @@ with open("res/fichiersBruts/chien.txt", 'r') as fichier:
 """
 
 
+
+
+def recupExploitable(Terme: str, edges: dict) -> dict:
+    
+    returnedDict = {}
+
+    filePath = "res/fichiersExploitables/"+Terme+"/"
+    with open(filePath+"e.json", "r", encoding="utf-8") as e_file :
+        current_term_edges = json.load(e_file)
+        
+        for key, value in current_term_edges.items() :
+            edges[int(intKey)] = value
+    
+    r_filesName = os.listdir(filePath)
+    r_filesName.remove("e.json")
+    for r_fileName in r_filesName :
+        with open(filePath+r_fileName, "r", encoding="utf-8") as r_file :
+            key = r_fileName.split('.')[0]
+
+            returnedDict[key] = json.load(r_file)
+
+    return returnedDict
+
 """
 on s'en sert une fois pour toutes les relations mais maintenant on s'en fout
 
@@ -260,8 +283,14 @@ def ntjson_vers_dictionnaire_nom_ntid(nomTerme):
 
 """
 
+<<<<<<< HEAD
 
 
 
 
 json_vers_exploitable("matou")
+=======
+e = {}
+recupExploitable("Paris",e)
+print(e)
+>>>>>>> 3f3aba0b751b387b382885a7e809d3d01b0d43a5

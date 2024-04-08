@@ -48,7 +48,7 @@ def takeRawData(word: str, enregistrerEnJson=True) -> str:
     
     
 
-
+"""
 def manageData(word: str, storageDir="res/fichierExploitables") :
     e_word_file = None
     r_word_file = None
@@ -83,14 +83,20 @@ def manageData(word: str, storageDir="res/fichierExploitables") :
 
         e_word_file.write(e_data[:-2]+'\n]')
         r_word_file.write(r_data[:-2]+'\n]')
+"""
 
+
+"""
 def label_data_json(prefix_data: str) -> List[str]:
     if prefix_data == 'e' :
         return ['eid','name','type','w','formated' 'name']
     elif prefix_data == 'r' :
         return ['rid','node1','node2','type','w','w_normed','rank']  
     else : return None
-    
+"""
+
+
+"""
 def manage_value(value: str) -> str :
     managed_value = value.replace("'","")
     managed_value = managed_value.replace("\n","")
@@ -99,8 +105,10 @@ def manage_value(value: str) -> str :
     except :
         pass
     return managed_value
+"""
 
 
+"""
 def dispatch_RToJSON(word: str, pathToRTJSON: str, storageDir="res/fichierExploitables") -> bool:
 
     try :
@@ -140,9 +148,10 @@ def dispatch_RToJSON(word: str, pathToRTJSON: str, storageDir="res/fichierExploi
     except Exception as e:
         print("Une erreur s'est produite :", e)        
         return False            
-
+"""
     
 
-takeRawData("griffer")
+#takeRawData("griffer")
+#takeRawData("Paris")
 #manageData("chien")
 #dispatch_RToJSON("chien","res/fichierExploitables/rt.json")
