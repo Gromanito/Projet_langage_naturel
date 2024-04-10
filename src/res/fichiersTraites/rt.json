@@ -1,0 +1,926 @@
+[
+    {
+        "rtid": "0",
+        "name": "r_associated",
+        "nom_etendu": "id\u00e9e associ\u00e9e",
+        "info": "Il est demand\u00e9 d'\u00e9num\u00e9rer les termes les plus \u00e9troitement associ\u00e9s au mot cible... Ce mot vous fait penser \u00e0 quoi ?"
+    },
+    {
+        "rtid": "1",
+        "name": "r_raff_sem",
+        "nom_etendu": "raffinement s\u00e9mantique",
+        "info": "Raffinement s\u00e9mantique vers un usage particulier du terme source"
+    },
+    {
+        "rtid": "2",
+        "name": "r_raff_morpho",
+        "nom_etendu": "raffinement morphologique",
+        "info": "Raffinement morphologique vers un usage particulier du terme source"
+    },
+    {
+        "rtid": "3",
+        "name": "r_domain",
+        "nom_etendu": "domaine",
+        "info": "Il est demand\u00e9 de fournir des domaines relatifs au mot cible. Par exemple, pour 'corner', on pourra donner les domaines 'football' ou 'sport'."
+    },
+    {
+        "rtid": "4",
+        "name": "r_pos",
+        "nom_etendu": "POS",
+        "info": "Partie du discours (Nom, Verbe, Adjectif, Adverbe, etc.)"
+    },
+    {
+        "rtid": "5",
+        "name": "r_syn",
+        "nom_etendu": "synonyme",
+        "info": "Il est demand\u00e9 d'\u00e9num\u00e9rer les synonymes ou quasi-synonymes de ce terme."
+    },
+    {
+        "rtid": "6",
+        "name": "r_isa",
+        "nom_etendu": "g\u00e9n\u00e9rique",
+        "info": "Il est demand\u00e9 d'\u00e9num\u00e9rer les GENERIQUES/hyperonymes du terme. Par exemple, 'animal' et 'mammif\u00e8re' sont des g\u00e9n\u00e9riques de 'chat'."
+    },
+    {
+        "rtid": "7",
+        "name": "r_anto",
+        "nom_etendu": "contraire",
+        "info": "Il est demand\u00e9 d'\u00e9num\u00e9rer des contraires du terme. Par exemple, 'chaud' est le contraire de 'froid'."
+    },
+    {
+        "rtid": "8",
+        "name": "r_hypo",
+        "nom_etendu": "sp\u00e9cifique",
+        "info": "Il est demand\u00e9 d'\u00e9num\u00e9rer des SPECIFIQUES/hyponymes du terme. Par exemple, 'mouche', 'abeille', 'gu\u00eape' pour 'insecte'."
+    },
+    {
+        "rtid": "9",
+        "name": "r_has_part",
+        "nom_etendu": "partie",
+        "info": "Il faut donner des PARTIES/constituants/\u00e9l\u00e9ments (a pour m\u00e9ronymes) du mot cible. Par exemple, 'voiture' a comme parties : 'porte', 'roue', 'moteur', ..."
+    },
+    {
+        "rtid": "10",
+        "name": "r_holo",
+        "nom_etendu": "tout",
+        "info": "Il est d\u00e9mand\u00e9 d'\u00e9num\u00e9rer des 'TOUT' (a pour holonymes)  de l'objet en question. Pour 'main', on aura 'bras', 'corps', 'personne', etc... Le tout est aussi l'ensemble comme 'classe' pour '\u00e9l\u00e8ve'."
+    },
+    {
+        "rtid": "11",
+        "name": "r_locution",
+        "nom_etendu": "locution",
+        "info": "A partir d'un terme, il est demand\u00e9 d'\u00e9num\u00e9rer les locutions, expression ou mots compos\u00e9s en rapport avec ce terme. Par exemple, pour 'moulin', ou pourra avoir 'moulin \u00e0 vent', 'moulin \u00e0 eau', 'moulin \u00e0 caf\u00e9'. Pour 'vendre', on pourra avoir 'vendre la peau de l'ours avant de l'avoir tu\u00e9', 'vendre \u00e0 perte', etc.."
+    },
+    {
+        "rtid": "12",
+        "name": "r_flpot",
+        "nom_etendu": " \tr_flpot",
+        "info": "(relation interne) potentiel de relation"
+    },
+    {
+        "rtid": "13",
+        "name": "r_agent",
+        "nom_etendu": "action>agent",
+        "info": "L'agent (qu'on appelle aussi le sujet) est l'entit\u00e9 qui effectue l'action, OU la subit pour des formes passives ou des verbes d'\u00e9tat. Par exemple, dans - Le chat mange la souris -, l'agent est le chat. Des agents typiques de 'courir' peuvent \u00eatre 'sportif', 'enfant',... (manger r_agent chat)"
+    },
+    {
+        "rtid": "14",
+        "name": "r_patient",
+        "nom_etendu": "action>patient",
+        "info": "Le patient (qu'on appelle aussi l'objet) est l'entit\u00e9 qui subit l'action. Par exemple dans - Le chat mange la souris -, le patient est la souris. Des patients typiques de manger peuvent \u00eatre 'viande', 'l\u00e9gume', 'pain', ... (manger r_patient pain)"
+    },
+    {
+        "rtid": "15",
+        "name": "r_lieu",
+        "nom_etendu": "chose>lieu",
+        "info": "Il est demand\u00e9 d'\u00e9num\u00e9rer les LIEUX typiques o\u00f9 peut se trouver le terme/objet en question. (carotte r_lieu potager)"
+    },
+    {
+        "rtid": "16",
+        "name": "r_instr",
+        "nom_etendu": "action>instrument",
+        "info": "L'instrument est l'objet avec lequel on fait l'action. Dans - Il mange sa salade avec une fourchette -, fourchette est l'instrument. Des instruments typiques de 'tuer' peuvent \u00eatre 'arme', 'pistolet', 'poison', ... (couper r_instr couteau)"
+    },
+    {
+        "rtid": "17",
+        "name": "r_carac",
+        "nom_etendu": "caract\u00e9ristique",
+        "info": "Pour un terme donn\u00e9, souvent un objet, il est demand\u00e9 d'en \u00e9num\u00e9rer les CARACt\u00e9ristiques (adjectifs) possibles/typiques. Par exemple, 'liquide', 'froide', 'chaude', pour 'eau'."
+    },
+    {
+        "rtid": "18",
+        "name": "r_data",
+        "nom_etendu": "r_data",
+        "info": "Informations diverses (plut\u00f4t d'ordre lexicales)"
+    },
+    {
+        "rtid": "19",
+        "name": "r_lemma",
+        "nom_etendu": "r_lemma",
+        "info": "Le lemme (par exemple 'mangent a pour lemme  'manger' ; 'avions' a pour lemme 'avion' ou 'avoir')."
+    },
+    {
+        "rtid": "20",
+        "name": "r_has_magn",
+        "nom_etendu": "magn",
+        "info": "La magnification ou amplification, par exemple - forte fi\u00e8vre - ou - fi\u00e8vre de cheval - pour fi\u00e8vre. Ou encore - amour fou - pour amour, - peur bleue - pour peur."
+    },
+    {
+        "rtid": "21",
+        "name": "r_has_antimagn",
+        "nom_etendu": "antimagn",
+        "info": "L'inverse de la magnification, par exemple - bruine - pour pluie."
+    },
+    {
+        "rtid": "22",
+        "name": "r_family",
+        "nom_etendu": "famille",
+        "info": "Des mots de la m\u00eame famille lexicale sont demand\u00e9s (d\u00e9rivation morphologique, par exemple). Par exemple, pour 'lait' on pourrait mettre 'laitier', 'laitage', 'laiterie', etc."
+    },
+    {
+        "rtid": "23",
+        "name": "r_carac-1",
+        "nom_etendu": "caract\u00e9ristique-1",
+        "info": "Quels sont les objets (des noms) poss\u00e9dant typiquement/possiblement la caract\u00e9risque suivante ? Par exemple, 'soleil', 'feu', pour 'chaud'."
+    },
+    {
+        "rtid": "24",
+        "name": "r_agent-1",
+        "nom_etendu": "agent typique-1",
+        "info": "Que peut faire ce SUJET ? (par exemple chat => miauler, griffer, etc.) (chat r_agent-1 manger)"
+    },
+    {
+        "rtid": "25",
+        "name": "r_instr-1",
+        "nom_etendu": "instrument>action",
+        "info": "L'instrument est l'objet avec lequel on fait l'action. Dans - Il mange sa salade avec une fourchette -, fourchette est l'instrument. On demande ici, ce qu'on peut faire avec un instrument donn\u00e9... (scie r_instr-1 scier)"
+    },
+    {
+        "rtid": "26",
+        "name": "r_patient-1",
+        "nom_etendu": "patient-1",
+        "info": "(inverse de r_patient) Que peut-on faire \u00e0 cet OBJET. Pour 'pomme', on pourrait avoir 'manger', 'croquer', couper', '\u00e9plucher',  etc. (pomme r_patient-1 manger)"
+    },
+    {
+        "rtid": "27",
+        "name": "r_domain-1",
+        "nom_etendu": "domaine-1",
+        "info": "inverse de r_domain : \u00e0 un domaine, on associe des termes"
+    },
+    {
+        "rtid": "28",
+        "name": "r_lieu-1",
+        "nom_etendu": "lieu>chose",
+        "info": "A partir d'un lieu, il est demand\u00e9 d'\u00e9num\u00e9rer ce qui peut typiquement s'y trouver. Par exemple : Paris r_lieu-1 tour Eiffel"
+    },
+    {
+        "rtid": "29",
+        "name": "r_chunk_pred",
+        "nom_etendu": "predicat",
+        "info": "(interne) d'un pr\u00e9dicat quel chunk ?"
+    },
+    {
+        "rtid": "30",
+        "name": "r_lieu_action",
+        "nom_etendu": "lieu>action",
+        "info": "A partir d'un lieu, \u00e9num\u00e9rer les actions typiques possibles dans ce lieu."
+    },
+    {
+        "rtid": "31",
+        "name": "r_action_lieu",
+        "nom_etendu": "action>lieu",
+        "info": "A partir d'une action (un verbe), \u00e9num\u00e9rer les lieux typiques possibles o\u00f9 peut \u00eatre r\u00e9alis\u00e9e cette action."
+    },
+    {
+        "rtid": "32",
+        "name": "r_sentiment",
+        "nom_etendu": "sentiment",
+        "info": "Pour un terme donn\u00e9, \u00e9voquer des mots li\u00e9s \u00e0 des SENTIMENTS ou des EMOTIONS que vous pourriez associer \u00e0 ce terme. Par exemple, la joie, le plaisir, le d\u00e9go\u00fbt, la peur, la haine, l'amour, l'indiff\u00e9rence, l'envie, avoir peur, horrible, etc."
+    },
+    {
+        "rtid": "33",
+        "name": "r_error",
+        "nom_etendu": "erreur",
+        "info": "lien d'erreur"
+    },
+    {
+        "rtid": "34",
+        "name": "r_manner",
+        "nom_etendu": "mani\u00e8re",
+        "info": "De quelles MANIERES peut \u00eatre effectu\u00e9e l'action (le verbe) propos\u00e9e. Il s'agira d'un adverbe ou d'un \u00e9quivalent comme une locution adverbiale, par exemple : 'rapidement', 'sur le pouce', 'goul\u00fbment', 'salement' ... pour 'manger'."
+    },
+    {
+        "rtid": "35",
+        "name": "r_meaning/glose",
+        "nom_etendu": "glose/sens/signification",
+        "info": "Quels SENS/SIGNIFICATIONS pouvez vous donner au terme propos\u00e9. Il s'agira de termes (des gloses) \u00e9voquant chacun des sens possibles, par exemple : 'forces de l'ordre', 'contrat d'assurance', 'police typographique', ... pour 'police'."
+    },
+    {
+        "rtid": "36",
+        "name": "r_infopot",
+        "nom_etendu": "information potentielle",
+        "info": "Information s\u00e9mantique potentielle"
+    },
+    {
+        "rtid": "37",
+        "name": "r_telic_role",
+        "nom_etendu": "r\u00f4le t\u00e9lique",
+        "info": "Le r\u00f4le t\u00e9lique indique la fonction du nom ou du verbe. Par exemple, couper pour couteau, scier pour scie, etc. C'est le r\u00f4le qu'on lui destine commun\u00e9ment pour un art\u00e9fact, ou bien un r\u00f4le qu'on peut attribuer \u00e0 un objet naturel (r\u00e9chauffer, \u00e9clairer pour soleil)."
+    },
+    {
+        "rtid": "38",
+        "name": "r_agentif_role",
+        "nom_etendu": "r\u00f4le agentif",
+        "info": "De quelle(s)  mani\u00e8re(s)  peut \u00eatre CR\u00c9E/CONSTRUIT le terme suivant. On demande des verbes transitifs (le terme en est un compl\u00e9ment d'objet) qui DONNENT NAISSANCE \u00e0 l'entit\u00e9 d\u00e9sign\u00e9e par le terme,  par exemple, 'construire' pour 'maison', 'r\u00e9diger'/'imprimer' pour 'livre' ou 'lettre'."
+    },
+    {
+        "rtid": "39",
+        "name": "r_verbe-action",
+        "nom_etendu": "verbe>action",
+        "info": "du verbe vers l'action. Par exemple, construire -> construction , jardiner -> jardinage . C'est un terme directement d\u00e9riv\u00e9 (ayant la m\u00eame racine). Applicable que pour un verbe et inverse de la relation 40 (action vers verbe)."
+    },
+    {
+        "rtid": "40",
+        "name": "r_action-verbe",
+        "nom_etendu": "action>verbe",
+        "info": "de l'action vers le verbe. Par exemple, construction -> construire, jardinage -> jardiner. C'est un terme directement d\u00e9riv\u00e9 (ayant la m\u00eame racine). Applicable que pour un nom et inverse de la relation 39 (verbe vers action)."
+    },
+    {
+        "rtid": "41",
+        "name": "r_conseq",
+        "nom_etendu": "cons\u00e9quence",
+        "info": "B (que vous devez donner) est une CONSEQUENCE possible de A. A et B sont des verbes ou des noms.  Exemples : tomber -> se blesser ; faim -> voler ; allumer -> incendie ; n\u00e9gligence --> accident ; etc."
+    },
+    {
+        "rtid": "42",
+        "name": "r_causatif",
+        "nom_etendu": "cause",
+        "info": "B (que vous devez donner) est une CAUSE possible de A. A et B sont des verbes ou des noms.  Exemples : se blesser -> tomber ; vol -> pauvret\u00e9 ; incendie -> n\u00e9gligence ; mort --> maladie ; etc."
+    },
+    {
+        "rtid": "43",
+        "name": "r_adj-verbe",
+        "nom_etendu": "adj>verbe",
+        "info": "Pour un adjectif de potentialit\u00e9/possibilit\u00e9, son verbe correspondant. Par exemple pour 'lavable' -> 'laver'"
+    },
+    {
+        "rtid": "44",
+        "name": "r_verbe-adj",
+        "nom_etendu": "verbe>adj",
+        "info": "Pour un verbe, son adjectif de potentialit\u00e9/possibilit\u00e9 correspondant. Par exemple pour 'laver' -> 'lavable'"
+    },
+    {
+        "rtid": "45",
+        "name": "r_chunk_sujet",
+        "nom_etendu": "r_chunk_sujet",
+        "info": "(interne)"
+    },
+    {
+        "rtid": "46",
+        "name": "r_chunk_objet",
+        "nom_etendu": "r_chunk_objet",
+        "info": "(interne)"
+    },
+    {
+        "rtid": "47",
+        "name": "r_chunk_loc",
+        "nom_etendu": "r_chunk_loc",
+        "info": "(interne)"
+    },
+    {
+        "rtid": "48",
+        "name": "r_chunk_instr",
+        "nom_etendu": "r_chunk_instr",
+        "info": "(interne)"
+    },
+    {
+        "rtid": "49",
+        "name": "r_time",
+        "nom_etendu": "action>temps",
+        "info": "Donner une valeur temporelle -quel moment- peut-on associer au terme indiqu\u00e9 (par exemple 'dormir' -> nuit, 'bronzer' -> \u00e9t\u00e9, 'fatigue' -> 'soir')"
+    },
+    {
+        "rtid": "50",
+        "name": "r_object>mater",
+        "nom_etendu": "objet>matiere",
+        "info": "Quel est la ou les MATIERE/SUBSTANCE pouvant composer l'objet qui suit. Par exemple, 'bois' pour 'poutre'."
+    },
+    {
+        "rtid": "51",
+        "name": "r_mater>object",
+        "nom_etendu": "mati\u00e8re>objet",
+        "info": "Quel est la ou les CHOSES qui sont compos\u00e9s de la MATIERE/SUBSTANCE qui suit (exemple 'bois' -> poutre, table, ...)."
+    },
+    {
+        "rtid": "52",
+        "name": "r_successeur-time",
+        "nom_etendu": "successeur",
+        "info": "Qu'est ce qui peut SUIVRE temporellement (par exemple No\u00eal -> jour de l'an, guerre -> paix, jour -> nuit,  pluie -> beau temps, repas -> sieste, etc) le terme suivant :"
+    },
+    {
+        "rtid": "53",
+        "name": "r_make",
+        "nom_etendu": "produit",
+        "info": "Que peut PRODUIRE le terme ? (par exemple abeille -> miel, usine -> voiture, agriculteur -> bl\u00e9,  moteur -> gaz carbonique ...)"
+    },
+    {
+        "rtid": "54",
+        "name": "r_product_of",
+        "nom_etendu": "est le produit de",
+        "info": "Le terme est le RESULTAT/PRODUIT de qui/quoi ?"
+    },
+    {
+        "rtid": "55",
+        "name": "r_against",
+        "nom_etendu": "s'oppose \u00e0",
+        "info": "A quoi le terme suivant S'OPPOSE/COMBAT/EMPECHE ? Par exemple, un m\u00e9dicament s'oppose \u00e0 la maladie."
+    },
+    {
+        "rtid": "56",
+        "name": "r_against-1",
+        "nom_etendu": "a comme opposition",
+        "info": "Inverse de r_against (s'oppose \u00e0) - a comme opposition active (S'OPPOSE/COMBAT/EMPECHE). Par exemple, une bact\u00e9rie \u00e0 comme opposition antibiotique."
+    },
+    {
+        "rtid": "57",
+        "name": "r_implication",
+        "nom_etendu": "implication",
+        "info": "Qu'est-ce que le terme implique logiquement ? Par exemple : ronfler implique dormir, courir implique se d\u00e9placer, c\u00e2lin implique contact physique. (attention ce n'est pas la cause ni le but...)"
+    },
+    {
+        "rtid": "58",
+        "name": "r_quantificateur",
+        "nom_etendu": "quantificateur",
+        "info": "Quantificateur(s) typique(s) pour le terme,  indiquant une quantit\u00e9. Par exemples, sucre -> grain, morceau - sel -> grain, pinc\u00e9e - herbe -> brin, touffe - ..."
+    },
+    {
+        "rtid": "59",
+        "name": "r_masc",
+        "nom_etendu": "\u00e9quivalent masc",
+        "info": "L'\u00e9quivalent masculin du terme : lionne --> lion."
+    },
+    {
+        "rtid": "60",
+        "name": "r_fem",
+        "nom_etendu": "\u00e9quivalent fem",
+        "info": "L'\u00e9quivalent f\u00e9minin du terme : lion --> lionne."
+    },
+    {
+        "rtid": "61",
+        "name": "r_equiv",
+        "nom_etendu": "\u00e9quivalent",
+        "info": "Termes strictement \u00e9quivalent/identique : acronymes et sigles (PS -> parti socialiste), apocopes (cin\u00e9 -> cin\u00e9ma), entit\u00e9s nomm\u00e9es (Louis XIV -> Le roi soleil), etc. (attention il ne s'agit pas de synonyme)"
+    },
+    {
+        "rtid": "62",
+        "name": "r_manner-1",
+        "nom_etendu": "maniere-1",
+        "info": "Quelles ACTIONS (verbes) peut-on effectuer de cette mani\u00e8re ? Par exemple, rapidement -> courir, manger, ..."
+    },
+    {
+        "rtid": "63",
+        "name": "r_agentive_implication",
+        "nom_etendu": "implication agentive",
+        "info": "Les verbes ou actions qui sont impliqu\u00e9s dans la cr\u00e9ation de l'objet. Par exemple pour 'construire' un livre, il faut, imprimer, relier, brocher, etc. Il s'agit des \u00e9tapes n\u00e9cessaires \u00e0 la r\u00e9alisation du r\u00f4le agentif."
+    },
+    {
+        "rtid": "64",
+        "name": "r_has_instance",
+        "nom_etendu": "a pour instance",
+        "info": "Une instance d'un 'type' est un individu particulier de ce type. Il s'agit d'une entit\u00e9 nomm\u00e9e (personne, lieu, organisation, etc) - par exemple, 'cheval' a pour instance possible 'Jolly Jumper', ou encore 'transatlantique' a pour instance possible 'Titanic'."
+    },
+    {
+        "rtid": "65",
+        "name": "r_verb_real",
+        "nom_etendu": "verbe>real",
+        "info": "Pour un verbe, celui qui r\u00e9alise l'action (par d\u00e9rivation morphologique). Par exemple, chasser -> chasseur, naviguer -> navigateur."
+    },
+    {
+        "rtid": "66",
+        "name": "r_chunk_head",
+        "nom_etendu": "r_chunk_head",
+        "info": ""
+    },
+    {
+        "rtid": "67",
+        "name": "r_similar",
+        "nom_etendu": "similaire",
+        "info": "Similaire/ressemble \u00e0 ; par exemple le congre est similaire \u00e0 une anguille, ..."
+    },
+    {
+        "rtid": "68",
+        "name": "r_set>item",
+        "nom_etendu": "ensemble>item",
+        "info": "Quel est l'ELEMENT qui compose l'ENSEMBLE qui suit (par exemple, un essaim est compos\u00e9 d'abeilles)"
+    },
+    {
+        "rtid": "69",
+        "name": "r_item>set",
+        "nom_etendu": "item>ensemble",
+        "info": "Quel est l'ENSEMBLE qui est compos\u00e9 de l'ELEMENT qui suit (par exemple, un essaim est compos\u00e9 d'abeilles)"
+    },
+    {
+        "rtid": "70",
+        "name": "r_processus>agent",
+        "nom_etendu": "processus>agent",
+        "info": "Quel est l'acteur de ce processus/\u00e9v\u00e9nement ? Par exemple,  'nettoyage' peut avoir comme acteur 'technicien de surface'."
+    },
+    {
+        "rtid": "71",
+        "name": "r_variante",
+        "nom_etendu": "variante",
+        "info": "Variantes du termes cible. Par exemple, yaourt, yahourt, ou encore \u00e9v\u00e8nement, \u00e9v\u00e9nement."
+    },
+    {
+        "rtid": "72",
+        "name": "r_syn_strict",
+        "nom_etendu": "r_syn_strict",
+        "info": "Termes strictement substituables, pour des termes hors du domaine g\u00e9n\u00e9ral, et pour la plupart des noms (exemple : endom\u00e9triose intra-ut\u00e9rine --> ad\u00e9nomyose)"
+    },
+    {
+        "rtid": "73",
+        "name": "r_is_smaller_than",
+        "nom_etendu": "est plus petit que",
+        "info": "Qu'est-ce qui est physiquement plus gros que... (la comparaison doit \u00eatre pertinente)"
+    },
+    {
+        "rtid": "74",
+        "name": "r_is_bigger_than",
+        "nom_etendu": "est plus gros que",
+        "info": "Qu'est-ce qui est physiquement moins gros que... (la comparaison doit \u00eatre pertinente)"
+    },
+    {
+        "rtid": "75",
+        "name": "r_accomp",
+        "nom_etendu": "accompagne",
+        "info": "Est souvent accompagn\u00e9 de, se trouve avec... Par exemple : Ast\u00e9rix et Obelix, le pain et le fromage, les fraises et la chantilly."
+    },
+    {
+        "rtid": "76",
+        "name": "r_processus>patient",
+        "nom_etendu": "processus>patient",
+        "info": "Quel est le patient de ce processus/\u00e9v\u00e9nement ? Par exemple,  'd\u00e9coupe' peut avoir comme patient 'viande'."
+    },
+    {
+        "rtid": "77",
+        "name": "r_verb_ppas",
+        "nom_etendu": "r_verb_ppas",
+        "info": "Le participe pass\u00e9 (au masculin singulier) du verbe infinitif. Par exemple, pour manger => mang\u00e9"
+    },
+    {
+        "rtid": "78",
+        "name": "r_cohypo",
+        "nom_etendu": "co-hyponyme",
+        "info": "Il est demand\u00e9 d'\u00e9num\u00e9rer les CO-HYPONYMES du terme. Par exemple, 'chat' et 'tigre' sont des co-hyponymes (de 'f\u00e9lin')."
+    },
+    {
+        "rtid": "79",
+        "name": "r_verb_ppre",
+        "nom_etendu": "r_verb_ppre",
+        "info": "Le participe pr\u00e9sent(au masculin singulier) du verbe infinitif. Par exemple, pour manger => mangeant"
+    },
+    {
+        "rtid": "80",
+        "name": "r_processus>instr",
+        "nom_etendu": "processus>instrument",
+        "info": "Quel est l'instrument/moyen de ce processus/\u00e9v\u00e9nement ? Par exemple,  'd\u00e9coupe' peut avoir comme instrument 'couteau'."
+    },
+    {
+        "rtid": "99",
+        "name": "r_der_morpho",
+        "nom_etendu": "d\u00e9rivation morphologique",
+        "info": "Des termes d\u00e9rivi\u00e9s morphologiquement sont demand\u00e9s). Par exemple, pour 'lait' on pourrait mettre 'laitier', 'laitage', 'laiterie', etc. (mais pas 'lactose'). Pour 'jardin', on mettra 'jardinier', 'jardinage', 'jardiner', etc. "
+    },
+    {
+        "rtid": "100",
+        "name": "r_has_auteur",
+        "nom_etendu": "a comme auteur",
+        "info": "Quel est l'auteur de l'oeuvre suivante ?"
+    },
+    {
+        "rtid": "101",
+        "name": "r_has_personnage",
+        "nom_etendu": "a comme personnages",
+        "info": "Quels sont les personnages pr\u00e9sents dans l'oeuvre qui suit ?"
+    },
+    {
+        "rtid": "102",
+        "name": "r_can_eat",
+        "nom_etendu": "se nourrit de",
+        "info": "De quoi peut se nourir l'animal suivant ?"
+    },
+    {
+        "rtid": "103",
+        "name": "r_has_actors",
+        "nom_etendu": "a comme acteurs",
+        "info": "A comme acteurs (pour un film ou similaire)."
+    },
+    {
+        "rtid": "104",
+        "name": "r_deplac_mode",
+        "nom_etendu": "mode de d\u00e9placement",
+        "info": "Mode de d\u00e9placement. chat r_deplac_node marche"
+    },
+    {
+        "rtid": "105",
+        "name": "r_has_interpret",
+        "nom_etendu": "a comme interpr\u00e8tes",
+        "info": "Interpr\u00e8te de personnages (cin\u00e9ma ou th\u00e9\u00e2tre)"
+    },
+    {
+        "rtid": "106",
+        "name": "r_color",
+        "nom_etendu": "couleur",
+        "info": "A comme couleur(s)... chat r_color noir"
+    },
+    {
+        "rtid": "107",
+        "name": "r_cible",
+        "nom_etendu": "a comme cible",
+        "info": "Cible de la maladie : myxomatose => lapin, rougeole => enfant, ..."
+    },
+    {
+        "rtid": "108",
+        "name": "r_symptomes",
+        "nom_etendu": "a comme symptomes",
+        "info": "Symptomes de la maladie : myxomatose => yeux rouges, rougeole => boutons, ..."
+    },
+    {
+        "rtid": "109",
+        "name": "r_predecesseur-time",
+        "nom_etendu": "pr\u00e9d\u00e9cesseur",
+        "info": "Qu'est ce qui peut PRECEDER temporellement (par exemple -  inverse de successeur) le terme suivant :"
+    },
+    {
+        "rtid": "110",
+        "name": "r_diagnostique",
+        "nom_etendu": "diagnostique",
+        "info": "Diagnostique pour la maladie : diab\u00e8te => prise de sang, rougeole => examen clinique, ..."
+    },
+    {
+        "rtid": "111",
+        "name": "r_predecesseur-space",
+        "nom_etendu": "pr\u00e9d\u00e9cesseur",
+        "info": "Qu'est ce qui peut PRECEDER spatialement (par exemple -  inverse de successeur spatial) le terme suivant :"
+    },
+    {
+        "rtid": "112",
+        "name": "r_successeur-space",
+        "nom_etendu": "successeur",
+        "info": "Qu'est ce qui peut SUIVRE spatialement (par exemple Locomotive \u00e0 vapeur -> tender, wagon etc.) le terme suivant :"
+    },
+    {
+        "rtid": "113",
+        "name": "r_social_tie",
+        "nom_etendu": "relation sociale/famille",
+        "info": "Relation sociale/familliale entre les individus... (annotation pour la nature exacte : fr\u00e8re, mari, etc.)"
+    },
+    {
+        "rtid": "114",
+        "name": "r_tributary",
+        "nom_etendu": "r_tributary",
+        "info": "Tributaire de (physique ou spatial)."
+    },
+    {
+        "rtid": "115",
+        "name": "r_sentiment-1",
+        "nom_etendu": "sentiment-1",
+        "info": "Pour un SENTIMENT ou EMOTION donn\u00e9, il est demand\u00e9 d\u2019\u00e9num\u00e9rer les termes que vous pourriez associer. Par exemple, pour 'joie', on aurait 'cadeau', 'naissance', 'bonne nouvelle', etc."
+    },
+    {
+        "rtid": "116",
+        "name": "r_linked-with",
+        "nom_etendu": "linked-with",
+        "info": "A quoi est-ce reli\u00e9 (un wagon est reli\u00e9 \u00e0 un autre wagon ou \u00e0 une locomotive) ?"
+    },
+    {
+        "rtid": "117",
+        "name": "r_foncteur",
+        "nom_etendu": "r_foncteur",
+        "info": "La fonction de ce terme par rapport \u00e0 d'autres. Pour les pr\u00e9positions notamment, 'chez' => relation r_location. (demande un type de relation comme valeur)"
+    },
+    {
+        "rtid": "118",
+        "name": "r_comparison",
+        "nom_etendu": "r_comparison",
+        "info": "(interne)"
+    },
+    {
+        "rtid": "119",
+        "name": "r_but",
+        "nom_etendu": "r_but",
+        "info": "But de l'action (nom ou verbe)"
+    },
+    {
+        "rtid": "120",
+        "name": "r_but-1",
+        "nom_etendu": "r_but-1",
+        "info": "Quel sont les actions ou verbes qui ont le terme cible comme but ?"
+    },
+    {
+        "rtid": "121",
+        "name": "r_own",
+        "nom_etendu": "pers>possession",
+        "info": "Que POSSEDE le terme suivant ? (un soldat poss\u00e8de un fusil, une cavali\u00e8re des bottes, ...  soldat r_own fusil, ...)"
+    },
+    {
+        "rtid": "122",
+        "name": "r_own-1",
+        "nom_etendu": "possession>pers",
+        "info": "Par qui ou quoi EST POSSEDE le terme suivant ? (par exemple, fusil r_own-1 soldat)"
+    },
+    {
+        "rtid": "123",
+        "name": "r_verb_aux",
+        "nom_etendu": "r_verb_aux",
+        "info": "Auxiliaire utilis\u00e9 pour ce verbe"
+    },
+    {
+        "rtid": "124",
+        "name": "r_predecesseur-logic",
+        "nom_etendu": "pr\u00e9d\u00e9cesseur logique",
+        "info": "Qu'est ce qui peut PRECEDER logiquement (par exemple : A pr\u00e9c\u00e8de B -  inverse de successeur logique) le terme suivant :"
+    },
+    {
+        "rtid": "125",
+        "name": "r_successeur-logic",
+        "nom_etendu": "successeur logique",
+        "info": "Qu'est ce qui peut SUIVRE logiquement (par exemple A -> B, C etc.) le terme suivant :"
+    },
+    {
+        "rtid": "126",
+        "name": "r_isa-incompatible",
+        "nom_etendu": "r_isa-incompatible",
+        "info": "Relation d'incompatibilit\u00e9 pour les g\u00e9n\u00e9riques. Si A r_isa-incompatible B alors X ne peut pas \u00eatre \u00e0 la fois A et B ou alors X est polys\u00e9mique. Par exemple, poisson r_isa-incompatible oiseau. Colin est \u00e0 la fois un oiseau et un poisson, donc colin est polys\u00e9mique."
+    },
+    {
+        "rtid": "127",
+        "name": "r_incompatible",
+        "nom_etendu": "r_incompatible",
+        "info": "Relation d'incompatibilit\u00e9, ne doivent pas \u00eatre pr\u00e9sents ensemble. Par exemple, alcool r_incompatible antibiotique."
+    },
+    {
+        "rtid": "128",
+        "name": "r_node2relnode",
+        "nom_etendu": "r_node2relnode",
+        "info": "Relation entre un noeud (quelconque) et un noeud de relation (type = 10) - permet de rendre le graphe connexe m\u00eame avec les annotations de relations"
+    },
+    {
+        "rtid": "129",
+        "name": "r_require",
+        "nom_etendu": "n\u00e9cessite / requiert",
+        "info": "Il est demand\u00e9 d'\u00e9num\u00e9rer les termes n\u00e9cessaires au mot mot cible... Par exemple, 'se reposer' => 'calme', ou 'pain' => 'farine'."
+    },
+    {
+        "rtid": "130",
+        "name": "r_is_instance_of",
+        "nom_etendu": "est une instance de",
+        "info": "Une instance est un individu particulier. Il s'agit d'une entit\u00e9 nomm\u00e9e (personne, lieu, organisation, etc) - par exemple, 'Jolly Jumper' est une instance de 'cheval', 'Titanic' en est une de 'transatlantique'."
+    },
+    {
+        "rtid": "131",
+        "name": "r_is_concerned_by",
+        "nom_etendu": "est concern\u00e9 par",
+        "info": "A peut \u00eatre concern\u00e9 par B. Par exemple, une personne a un rendez-vous a une maladie, une id\u00e9e, une opinion, etc..."
+    },
+    {
+        "rtid": "132",
+        "name": "r_symptomes-1",
+        "nom_etendu": "est un symptome de",
+        "info": "Inverse de sympt\u00f4mes de la maladie : myxomatose => yeux rouges, rougeole => boutons, ..."
+    },
+    {
+        "rtid": "133",
+        "name": "r_units",
+        "nom_etendu": "a pour unit\u00e9s",
+        "info": "A comme unit\u00e9s pour une propri\u00e9t\u00e9, ou une mesure. Par exemple vitesse a pour unit\u00e9s m/s ou km/h, etc."
+    },
+    {
+        "rtid": "134",
+        "name": "r_promote",
+        "nom_etendu": "favorise",
+        "info": "Qu'est-ce que le terme suivant FAVORISE ? Par exemple, un catalyseur favorise une r\u00e9action chimique."
+    },
+    {
+        "rtid": "135",
+        "name": "r_circumstances",
+        "nom_etendu": "circumstances",
+        "info": "Les circonstances possibles pour un \u00e9v\u00e9nements, ou un objet"
+    },
+    {
+        "rtid": "136",
+        "name": "r_has_auteur-1",
+        "nom_etendu": "est l'auteur de",
+        "info": "Quel sont les oeuvres de l'auteur suivant ?"
+    },
+    {
+        "rtid": "137",
+        "name": "r_processus>agent-1",
+        "nom_etendu": "processus>agent-1",
+        "info": ""
+    },
+    {
+        "rtid": "138",
+        "name": "r_processus>patient-1",
+        "nom_etendu": "processus>patient-1",
+        "info": ""
+    },
+    {
+        "rtid": "139",
+        "name": "r_processus>instr-1",
+        "nom_etendu": "processus>instrument-1",
+        "info": ""
+    },
+    {
+        "rtid": "149",
+        "name": "r_compl_agent",
+        "nom_etendu": "compl\u00e9ment d'agent",
+        "info": "Le compl\u00e9ment d'agent est celui qui effectue l'action dans les formes passives. Par exemple, pour '\u00eatre mang\u00e9', la souris est l'agent et le chat le compl\u00e9ment d'agent."
+    },
+    {
+        "rtid": "150",
+        "name": "r_beneficiaire",
+        "nom_etendu": "action>b\u00e9n\u00e9ficiaire",
+        "info": "Le b\u00e9n\u00e9ficiaire est l'entit\u00e9 qui tire b\u00e9n\u00e9fice/pr\u00e9judice de l'action (un compl\u00e9ment d'objet indirect introduit par '\u00e0', 'pour', ...). Par exemple dans - La sorci\u00e8re donne une pomme \u00e0 Blanche Neige -, la b\u00e9n\u00e9ficiaire est Blanche Neige ... enfin, bref, vous avez compris l'id\u00e9e."
+    },
+    {
+        "rtid": "151",
+        "name": "r_descend_de",
+        "nom_etendu": "descend de",
+        "info": "Descend de (\u00e9volution)..."
+    },
+    {
+        "rtid": "152",
+        "name": "r_domain_subst",
+        "nom_etendu": "domain_subst",
+        "info": "Quels sont le ou les domaines de substitution pour ce terme quand il est utilis\u00e9 comme domaine (par exemple, 'muscle' => 'anatomie du syst\u00e8me musculaire')"
+    },
+    {
+        "rtid": "153",
+        "name": "r_prop",
+        "nom_etendu": "propri\u00e9t\u00e9",
+        "info": "Pour le terme donn\u00e9, il faut indiquer les noms de propri\u00e9t\u00e9s pertinents (par exemple pour 'voiture', le 'prix', la 'puissance', la 'longueur', le 'poids', etc. On ne met que des noms et pas des adjectifs)."
+    },
+    {
+        "rtid": "154",
+        "name": "r_activ_voice",
+        "nom_etendu": "voix active",
+        "info": "Pour un verbe \u00e0 la voix passive, sa voix active. Par exemple, pour '\u00eatre mang\u00e9' on aura 'manger'."
+    },
+    {
+        "rtid": "155",
+        "name": "r_make_use_of",
+        "nom_etendu": "r_make_use_of",
+        "info": "Peut utiliser un objet ou produit (par exemple \u00e9lectricit\u00e9 pour frigo)."
+    },
+    {
+        "rtid": "156",
+        "name": "r_is_used_by",
+        "nom_etendu": "r_is_used_by",
+        "info": "Est utilis\u00e9 par (par exemple essence pour voiture)."
+    },
+    {
+        "rtid": "157",
+        "name": "r_adj-nomprop",
+        "nom_etendu": "adj>nomprop",
+        "info": "Pour un adjectif, donner le nom de propri\u00e9t\u00e9 correspondant. Par exemple, pour 'friable' -> 'friabilit\u00e9'"
+    },
+    {
+        "rtid": "158",
+        "name": "r_nomprop-adj",
+        "nom_etendu": "nomprop>adj",
+        "info": "Pour un nom de propri\u00e9t\u00e9, donner l'adjectif correspondant. Par exemple, pour 'friabilit\u00e9' -> 'friable'"
+    },
+    {
+        "rtid": "159",
+        "name": "r_adj-adv",
+        "nom_etendu": "adj>adv",
+        "info": "Pour un adjectif, donner l'adverbe correspondant. Par exemple, pour 'rapide' -> 'rapidement'"
+    },
+    {
+        "rtid": "160",
+        "name": "r_adv-adj",
+        "nom_etendu": "adv>adj",
+        "info": "Pour un adverbe, donner l'adjectif correspondant. Par exemple, pour 'rapidement' -> 'rapide'"
+    },
+    {
+        "rtid": "161",
+        "name": "r_homophone",
+        "nom_etendu": "homophone",
+        "info": "Il est demand\u00e9 d'\u00e9num\u00e9rer les homophones ou quasi-homophones de ce terme."
+    },
+    {
+        "rtid": "162",
+        "name": "r_potential_confusion",
+        "nom_etendu": "confusion potentielle",
+        "info": "Confusion potentielle avec un autre terme (par exemple, acre et \u00e2cre, d\u00e9tonner et d\u00e9toner)."
+    },
+    {
+        "rtid": "163",
+        "name": "r_concerning",
+        "nom_etendu": "concernant",
+        "info": "Qui concerne quelque chose ou quelqu'un. Par exemple: maladie r_concerning personne, ou disparition r_concerning emploi. (inverse de r_is_concerned_by)"
+    },
+    {
+        "rtid": "164",
+        "name": "r_adj>nom",
+        "nom_etendu": "r_adj>nom",
+        "info": "Le nom associ\u00e9 \u00e0 l'adjectif. Par exemple, 'urinaire' -> 'urine'"
+    },
+    {
+        "rtid": "165",
+        "name": "r_nom>adj",
+        "nom_etendu": "r_nom>adj",
+        "info": "L'adjectif associ\u00e9 au nom. Par exemple, 'urine' -> 'urinaire' "
+    },
+    {
+        "rtid": "166",
+        "name": "r_opinion_of",
+        "nom_etendu": "r_opinion_of",
+        "info": "L'opinion de tel groupe ou telle personne. Utilis\u00e9 comme relation d'annotation."
+    },
+    {
+        "rtid": "200",
+        "name": "r_context",
+        "nom_etendu": "r_context",
+        "info": "Relation de contexte entre un terme et un noeud contexte."
+    },
+    {
+        "rtid": "333",
+        "name": "r_translation",
+        "nom_etendu": "r_translation",
+        "info": "Traduction vers une autre langue."
+    },
+    {
+        "rtid": "444",
+        "name": "r_link",
+        "nom_etendu": "r_link",
+        "info": "Lien vers une ressource externe (WordNet, RadLex, UMLS, Wikipedia, etc...)"
+    },
+    {
+        "rtid": "555",
+        "name": "r_cooccurrence",
+        "nom_etendu": "r_cooccurrence",
+        "info": "co-occurences (non utilis\u00e9e)"
+    },
+    {
+        "rtid": "666",
+        "name": "r_aki",
+        "nom_etendu": "r_aki",
+        "info": "(TOTAKI) equivalent pour TOTAKI de l'association libre"
+    },
+    {
+        "rtid": "777",
+        "name": "r_wiki",
+        "nom_etendu": "r_wiki",
+        "info": "Associations issues de wikipedia..."
+    },
+    {
+        "rtid": "997",
+        "name": "r_annotation_exception",
+        "nom_etendu": "r_annotation_exception",
+        "info": "Relation pour indiquer qu'il s'agit d'une exception par rapport \u00e0 la cible.  L'autruche ne vole pas, et c'est une exception par rapport \u00e0 l'oiseau prototypique."
+    },
+    {
+        "rtid": "998",
+        "name": "r_annotation",
+        "nom_etendu": "r_annotation",
+        "info": "Relation pour annoter (de fa\u00e7on g\u00e9n\u00e9rale) des relations"
+    },
+    {
+        "rtid": "999",
+        "name": "r_inhib",
+        "nom_etendu": "r_inhib",
+        "info": "relation d'inhibition, le terme inhibe les termes suivants... ce terme a tendance \u00e0 exclure le terme associ\u00e9."
+    },
+    {
+        "rtid": "1000",
+        "name": "r_prev",
+        "nom_etendu": "r_prev",
+        "info": "(interne)"
+    },
+    {
+        "rtid": "1001",
+        "name": "r_succ",
+        "nom_etendu": "r_succ",
+        "info": "(interne)"
+    },
+    {
+        "rtid": "1002",
+        "name": "r_termgroup",
+        "nom_etendu": "r_termgroup",
+        "info": "(interne)"
+    },
+    {
+        "rtid": "2000",
+        "name": "r_raff_sem-1",
+        "nom_etendu": "r_raff_sem-1",
+        "info": "Inverse de r_raff_sem (automatique)"
+    },
+    {
+        "rtid": "2001",
+        "name": "r_learning_model",
+        "nom_etendu": "r_learning_model",
+        "info": "(interne)"
+    }
+]

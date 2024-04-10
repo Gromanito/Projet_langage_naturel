@@ -4,8 +4,16 @@ import traitementJson
 import recupDonnees
 import inferences
 import json
+import time 
 
-
+# UTILISATION : mettre @timing comme annotation d'une fonction
+def timing(func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        func(*args, **kwargs)
+        end_time = time.time()
+        print("Durée d'exécution : {:1.3}s".format(end_time - start_time))
+    return wrapper
 
 def recup_input_user():
 
