@@ -6,6 +6,12 @@ import json
 
 import traitementJson
 
+
+
+#je sais faut pas mettre des variables globales mais on la touchera pas et j'ai pas envie de mettre un paramètre en plus dans absolument chaque fonction donc c'est bien comme ça
+
+
+
 # """
 # récupère les données des fichiers json pour pouvoir les manipuler facilement
 
@@ -14,19 +20,29 @@ import traitementJson
 # """
 
 
-
-def takeRawData(word: str) -> str:
+def takeRawData(word: str, relationString=None, relationId=None) -> str:
     """
         récupère le fichier du terme tel quel, en dur (pour pas avoir à le retélécharger)
     """
     
-    fileName = "res/fichiersBruts/"+ word + ".txt"
+    global dicoRT
+
+    
+    fileName = "res/fichiersBruts/"+ word + ".txt" if relation==None else "res/fichiersBruts/"+ word + relation  + ".txt"
+    
+
     texteBrut = None
 
     if not os.path.exists(fileName):
         #le mot n'a pas été téléchargé, on le fait
 
-        url = 'https://www.jeuxdemots.org/rezo-dump.php?gotermsubmit=Chercher&gotermrel='+word+'&rel='
+        
+        url = 'https://www.jeuxdemots.org/rezo-dump.php?gotermsubmit=Chercher&gotermrel='+word+'&rel='\
+                if relation==None\
+                else 'https://www.jeuxdemots.org/rezo-dump.php?gotermsubmit=Chercher&gotermrel=' + word + '&rel=' + str(relationId) 
+
+    
+        
         response = requests.get(url)
         
         

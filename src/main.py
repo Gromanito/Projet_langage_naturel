@@ -19,10 +19,19 @@ def recup_input_user():
             exit()
         
         
-        elements = entree.split()
-        if len(elements) != 3:
-            print("L'entrée doit contenir trois termes séparés par des espaces.")
+        indiceRelation = entree.find("r_")
+
+        if indiceRelation < 0:
+            print("Veuillez indiquer une relation correcte")
             continue
+            
+        terme1 = entree[ 0 :indiceRelation-1]
+        relation = entree[indiceRelation:].split()[0]
+        terme2 = entree[indiceRelation + len(relation)+1:]
+
+
+        elements = [terme1, relation, terme2]
+        
         
         
         return elements

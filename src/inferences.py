@@ -38,55 +38,19 @@ def inference_deductive(terme1, relationsTerme1, typeRelation, terme2, relations
 		lesEntrantsDeTerme2 = [sortant for sortant in relationsTerme2[coercifDeLaRelation]["sortant"].keys()]
 
 
-	print("\n")
+	print("\ninférence déductive : ")
 	for generique in lesMeilleuresGeneriques:
 		if generique in lesEntrantsDeTerme2:
 
 			#générique est un identifiant, on récupère le nom associé
-			print("oui car " + terme1 +  " " + "r_isa" + " " + edges[generique]["name"] + " et " + edges[generique]["name"] + " " + typeRelation + " " + terme2)
+			print("\toui car " + terme1 +  " " + "r_isa" + " " + edges[generique]["name"] + " et " + edges[generique]["name"] + " " + typeRelation + " " + terme2)
 	print("\n")
 
 
 
 
 
-#pour l'instant on peut pas la faire à cause de "r_hypo" on demandera
-def inference_inductive(terme1, relationsTerme1, typeRelation, terme2, relationsTerme2, edges, nombreInferences=5):
-	""" trouver un spécifique pour lequel la réponse est vraie
 
-	oiseau r_agent-1 voler?
-	 -> oui car pigeon r_isa oiseau      et     pigeon r_agent-1 voler
-	
-	intuition de l'implémentation:
-	sur cet exemple
-	on récupère tous les objets x tels que x r_isa oiseau  (qu'on aura récup avec le "fichier" oiseau)
-	et on regarde si on a  x r_agent-1 voler 			   (qu'on aura récup avec le "fichier" voler)
-
-
-
-	(en vrai c'est exactement comme l'inférence déductive mais on regarde plus les génériques, que les spécifiques)
-	"""
-
-
-
-	lesMeilleuresGeneriques = []
-	for generique, poids in relationsTerme1["r_hypo"]["entrant"].items():
-		if poids["weight_normed"]>0.5:
-			lesMeilleuresGeneriques.append(generique)
-
-		if len(lesMeilleuresGeneriques) >= nombreInferences:
-			break
-
-	
-	lesAgentsDeTerme2 = [agents for agents in relationsTerme2[typeRelation]["entrant"].keys()]
-
-	print("\ninférence déductive : ")
-	for generique in lesMeilleuresGeneriques:
-		if generique in lesAgentsDeTerme2:
-
-			#générique est un identifiant, on récupère le nom associé
-			print("\t" + edges[generique]["name"] + " " + typeRelation + " " + terme2)
-	print("\n")
 
 
 
@@ -130,5 +94,65 @@ def inference_transitive(terme1, relationsTerme1, typeRelation, terme2, relation
 	for trucTransitif in lesMeilleursTrucsTransitifs:
 		if trucTransitif in lesEntrantsDeTerme2:
 			#générique est un identifiant, on récupère le nom associé
-			print("\t" + "oui car " + terme1 +  " " + typeRelation + " " + edges[trucTransitif]["name"] + " et " + edges[generique]["name"] + " " + typeRelation + " " + terme2)
+			print("\t" + "oui car " + terme1 +  " " + typeRelation + " " + edges[trucTransitif]["name"] + " et " + edges[trucTransitif]["name"] + " " + typeRelation + " " + terme2)
+	print("\n")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	#pour l'instant on peut pas la faire à cause de "r_hypo" on demandera
+def inference_inductive(terme1, relationsTerme1, typeRelation, terme2, relationsTerme2, edges, nombreInferences=5):
+	""" trouver un spécifique pour lequel la réponse est vraie
+
+	oiseau r_agent-1 voler?
+	 -> oui car pigeon r_isa oiseau      et     pigeon r_agent-1 voler
+	
+	intuition de l'implémentation:
+	sur cet exemple
+	on récupère tous les objets x tels que x r_isa oiseau  (qu'on aura récup avec le "fichier" oiseau)
+	et on regarde si on a  x r_agent-1 voler 			   (qu'on aura récup avec le "fichier" voler)
+
+
+
+	(en vrai c'est exactement comme l'inférence déductive mais on regarde plus les génériques, que les spécifiques)
+	"""
+
+
+
+	lesMeilleuresGeneriques = []
+	for generique, poids in relationsTerme1["r_hypo"]["entrant"].items():
+		if poids["weight_normed"]>0.5:
+			lesMeilleuresGeneriques.append(generique)
+
+		if len(lesMeilleuresGeneriques) >= nombreInferences:
+			break
+
+	
+	lesAgentsDeTerme2 = [agents for agents in relationsTerme2[typeRelation]["entrant"].keys()]
+
+	print("\ninférence déductive : ")
+	for generique in lesMeilleuresGeneriques:
+		if generique in lesAgentsDeTerme2:
+
+			#générique est un identifiant, on récupère le nom associé
+			print("\t" + edges[generique]["name"] + " " + typeRelation + " " + terme2)
 	print("\n")
