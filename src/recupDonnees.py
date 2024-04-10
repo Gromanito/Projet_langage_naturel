@@ -37,9 +37,9 @@ def takeRawData(word: str, relationString=None, relationId=None) -> str:
         #le mot n'a pas été téléchargé, on le fait
 
         
-        url = 'https://www.jeuxdemots.org/rezo-dump.php?gotermsubmit=Chercher&gotermrel='+word+'&rel='\
+        url = 'https://www.jeuxdemots.org/rezo-dump.php?gotermsubmit=Chercher&gotermrel='+word.replace(' ','+')+'&rel='\
                 if relation==None\
-                else 'https://www.jeuxdemots.org/rezo-dump.php?gotermsubmit=Chercher&gotermrel=' + word + '&rel=' + str(relationId) 
+                else 'https://www.jeuxdemots.org/rezo-dump.php?gotermsubmit=Chercher&gotermrel=' + word.replace(' ','+') + '&rel=' + str(relationId)
 
     
         
