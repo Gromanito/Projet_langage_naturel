@@ -15,38 +15,74 @@ import traitementJson
 
 
 
-def takeRawData(word: str, enregistrerEnJson=True) -> str:
-    url = 'https://www.jeuxdemots.org/rezo-dump.php?gotermsubmit=Chercher&gotermrel='+word+'&rel='
-    response = requests.get(url)
+def takeRawData(word: str) -> str:
+    """
+        récupère le fichier du terme tel quel, en dur (pour pas avoir à le retélécharger)
+    """
     
     fileName = "res/fichiersBruts/"+ word + ".txt"
-    
-    if os.path.exists(fileName):
-        print("Ce mot est déjà enregistré")
-        return True
-    
+    texteBrut = None
 
-    if response.status_code != 200:
-        print("La requête a échoué avec le code :", response.status_code)
-        return False
+    if not os.path.exists(fileName):
+        #le mot n'a pas été téléchargé, on le fait
 
-    else:
-        # on a réussi a récup le texte brut
-
-        with open(fileName, 'w', encoding='utf-8') as fichier:
-            fichier.write(response.text)
-            print("Contenu enregistré dans le fichier " + fileName)
+        url = 'https://www.jeuxdemots.org/rezo-dump.php?gotermsubmit=Chercher&gotermrel='+word+'&rel='
+        response = requests.get(url)
         
-        if enregistrerEnJson:
-            return traitementJson.enregistrer_en_json(word, response.text)
+        
+
+        if response.status_code != 200:
+            print("La requête a échoué avec le code :", response.status_code)
+            return "EchecRequete"
 
         else:
-            return True
+            # on a réussi a récup le texte brut
+            texteBrut = response.text
+           
+            with open(fileName, 'w', encoding='utf-8') as fichier:
+                fichier.write(texteBrut)
+                print("Contenu enregistré dans le fichier " + fileName)
+            
+            
+
+    return texteBrut
         
 
 
     
+
+def recupExploitable(Terme: str, edges: dict) -> dict:
+
+    """
+        Récupère les données json utiles et les transforme en dictionnaire
+    """
     
+    returnedDict = {}
+
+
+
+    filePath = "res/fichiersExploitables/"+Terme+"/"
+    with open(filePath+"e.json", "r", encoding="utf-8") as e_file :
+        current_term_edges = json.load(e_file)
+
+        idTerme = current_term_edges.pop("id")
+
+        
+        for key, value in current_term_edges.items() :
+            edges[key] = value
+    
+    r_filesName = os.listdir(filePath)
+    r_filesName.remove("e.json")
+    for r_fileName in r_filesName :
+        with open(filePath+r_fileName, "r", encoding="utf-8") as r_file :
+            key = r_fileName.split('.')[0]
+
+            returnedDict[key] = json.load(r_file)
+
+    returnedDict["id"] = idTerme
+    return returnedDict    
+
+
 
 """
 def manageData(word: str, storageDir="res/fichierExploitables") :

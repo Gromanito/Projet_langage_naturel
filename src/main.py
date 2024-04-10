@@ -1,14 +1,9 @@
 """programme pour faire des inférences, jspTrop"""
 
-
+import traitementJson
 import recupDonnees
-
-
-
-def remplirDicos(dicoDesRelations, dicoDesTermes):
-
-
-
+import inferences
+import json
 
 
 
@@ -21,7 +16,7 @@ def recup_input_user():
         # Vérifier si l'utilisateur veut quitter le programme
         if entree.lower() == "exit":
             print("Au revoir")
-            break
+            exit()
         
         
         elements = entree.split()
@@ -37,19 +32,34 @@ def recup_input_user():
         
 
 
+def prepareEtRecupereLesDonneesExploitables(terme:str, dicoEdges:dict, dicoRelationsDesTermes:dict) -> dict:
+
+    chaineBruteTerme = recupDonnees.takeRawData(terme)
+    
+    if chaineBruteTerme == "EchecRequete":
+        print("problème lors de la requête internet (avez vous bien écrit les termes?)")
+        return False
+
+    dico = traitementJson.enregistrer_en_json(terme, chaineBruteTerme)
+    traitementJson.json_vers_exploitable(terme, dico)
+    
+    
+    dicoRelationsDesTermes[terme] = recupDonnees.recupExploitable(terme, dicoEdges)
+
+    return True
 
 
 def jouer():
 
     print("Bienvenue sur Super Inferator!\n\n")
 
+    dicoEdges = {}
+    dicoRelationsDesTermes = {}
 
     #on récup les types de relation et de noeud
     with  open("res/fichiersExploitables/rt.json") as fichier:
         relation_types = json.load(fichier)
 
-    with  open("res/fichiersExploitables/nt.json") as fichier:
-        node_types = json.load(fichier)
     
 
     #boucle infinie, on peut demander autant d'inférences que l'on veut
@@ -57,14 +67,15 @@ def jouer():
     while True:
         elements = recup_input_user()
 
+        
+        
+        terme1aEteRecup = prepareEtRecupereLesDonneesExploitables(elements[0], dicoEdges, dicoRelationsDesTermes)
         relation = relation_types.get(elements[1])
-
-        terme1aEteRecup = recupDonnees.recupBaseBrut(elements[0])
-        terme2aEteRecup = recupDonnees.recupBaseBrut(elements[2])
+        terme2aEteRecup = prepareEtRecupereLesDonneesExploitables(elements[2], dicoEdges, dicoRelationsDesTermes)
         
 
-        ttSestBienPasse = terme1aEteRecup and 
-                          terme2aEteRecup and 
+        ttSestBienPasse = terme1aEteRecup and \
+                          terme2aEteRecup and \
                           relation is not None
 
 
@@ -73,26 +84,20 @@ def jouer():
             continue
         
         else:
+            terme1, terme2, typeRelation = elements[0], elements[2], elements[1]
+
+        
+            inferences.inference_deductive(terme1, dicoRelationsDesTermes[terme1], typeRelation, terme2, dicoRelationsDesTermes[terme2], dicoEdges )
             
-            #on a bien les données en local, mtn on les charge et on infère
+            if typeRelation == "r_lieu" or typeRelation == "r_has_part" or typeRelation == "r_lieu-1":
+                inferences.inference_transitive(terme1, dicoRelationsDesTermes[terme1], typeRelation, terme2, dicoRelationsDesTermes[terme2], dicoEdges )
+
+            
 
 
+
+
+jouer()
 
 
         
-
-
-        
-
-
-
-
-
-
-
-
-
-
-def recupFichier
-
-
