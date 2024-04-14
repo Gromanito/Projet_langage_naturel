@@ -1,6 +1,4 @@
 import requests
-import json
-from typing import List
 import os
 import json
 
@@ -20,53 +18,62 @@ import traitementJson
 # """
 
 
-def takeRawData(word: str, relationString=None, relationId=None) -> str:
+def takeRawData(word: str, rtJSON=None, relationString=None,) -> str:
     """
         récupère le fichier du terme tel quel, en dur (pour pas avoir à le retélécharger)
     """
-    
-    global dicoRT
 
     
-    fileName = "res/fichiersBruts/"+ word + ".txt" if relation==None else "res/fichiersBruts/"+ word + relation  + ".txt"
-    
-
+    fileName = "res/fichiersBruts/"+ word + ".txt" if relationString==None else "res/fichiersBruts/"+ word + relationString  + ".txt"
     texteBrut = None
 
     if not os.path.exists(fileName):
-        #le mot n'a pas été téléchargé, on le fait
+        #le mot n'a pas déjà été téléchargé, on le fait
 
-        
+
+        #préparation de l'URL
+        if rtJSON == None:
+            with open("res/fichiersExploitables/rt.json", 'r') as fichier:
+                rtJSON = json.load(fichier)
+
         url = 'https://www.jeuxdemots.org/rezo-dump.php?gotermsubmit=Chercher&gotermrel='+word.replace(' ','+')+'&rel='\
-                if relation==None\
-                else 'https://www.jeuxdemots.org/rezo-dump.php?gotermsubmit=Chercher&gotermrel=' + word.replace(' ','+') + '&rel=' + str(relationId)
+        
+        if relationString != None:
+            url = url + str(rtJSON[relationString])
 
     
-        
+        #requête internet
         response = requests.get(url)
-        
-        
-
+    
+        #la requête a échoué
         if response.status_code != 200:
             print("La requête a échoué avec le code :", response.status_code)
             return "EchecRequete"
 
+
         else:
-            # on a réussi a récup le texte brut
+            # la requête a réussie
             texteBrut = response.text
-           
+
+
+            #on regarde si le terme entré existe
+            #(s'il n'existe pas la page est petite)
+            if len(texteBrut) < 6000:
+                print("le terme semble ne pas exister")
+                return "TermeExistePas"
+
+            #on enregistre le texte brut dans un fichier
             with open(fileName, 'w', encoding='utf-8') as fichier:
                 fichier.write(texteBrut)
-                print("Contenu enregistré dans le fichier " + fileName)
+                print("Contenu brut enregistré dans le fichier " + fileName)
             
-            
-
     return texteBrut
         
 
 
     
-
+#ancienne fonction pour récupérer les json et les inclure dans le programme
+#(on s'en sert plus)
 def recupExploitable(Terme: str, edges: dict) -> dict:
 
     """
@@ -74,7 +81,6 @@ def recupExploitable(Terme: str, edges: dict) -> dict:
     """
     
     returnedDict = {}
-
 
 
     filePath = "res/fichiersExploitables/"+Terme+"/"
