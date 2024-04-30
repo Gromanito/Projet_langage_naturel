@@ -1,15 +1,15 @@
 {
 "triangle":{
     "all":[
-        {  
-            "C":"A;r_lemma;C",
+        {   "name":"deductif r_lemma",
+            "C":"A;r_lemma",
             "inference": "C;rt;B"
         }
     ],
-    "r_proccess-1":[
-        {  
-            "C":"A;r_lemma;C",
-            "inference": "C;rt;B"
+    "r_agent-1":[
+        {   "name":"j'ai pas d'idée",
+            "C":"A;r_processus>agent-1;C",
+            "inference": "C;r_action-verbe;B"
         }
     ]
 },

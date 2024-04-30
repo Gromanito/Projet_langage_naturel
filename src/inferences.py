@@ -6,7 +6,75 @@ conversifs = {"r_lieu":"r_lieu-1",\
 			"r_agent":"r_agent-1",\
 			"r_agent-1":"r_agent",\
 			"r_has_part":"r_holo",\
-			"r_holo":"r_has_part"}
+			"r_holo":"r_has_part",
+			}
+
+
+
+def recup_elements(source, relation, entrant=False, nombreInferences=3 ):
+	elements = {}
+	sens = "entrant" if entrant else "sortant"
+	for noeud, poids in relationsTerme1[relation][sens].items():
+		elements[noeud]= poids
+
+		if len(elements) >= nombreInferences:
+			break
+	
+	return elements
+
+
+def print_inference_triangle(inferenceJSON, intermediaires, elements_inference, terme1, relation, terme2, relationsTerme1, relationsTerme2, edges ):
+	
+	if inferenceJSON["name"]==None:
+		print("\ninférence (sans nom)")
+	else:
+		print("inférence \""+inferenceJSON["name"]+'"')
+
+	
+	A = terme1
+	B = terme2
+
+	chaineReponse = "\t" + "oui car      "
+
+
+	ligneC = inferenceJSON["C"].split()
+	ligneInference = inferenceJSON["inference"].split()
+
+
+	if ligneC[0] == 'A':
+		chaineReponse = chaineReponse + A
+	elif ligneC[0] == 'B':
+		chaineReponse = chaineReponse + B
+	
+	
+
+	for intermediaire in intermediaires.keys():
+		if intermediaire in elements_inference.keys():
+			
+			#intermediaire est un identifiant, on récupère le nom associé
+			C = edges[intermediaire]["name"]
+
+			chaineReponse = chaineReponse + ' ' + ligneC[1] + " " + edges[intermediaire]["name"] + "     et     "
+
+			if ligneInference[0] == 'A':
+				chaineReponse = chaineReponse + A
+			elif ligneInference[0] == 'B':
+				chaineReponse = chaineReponse + B
+			elif ligneInference[0] == 'C':
+				chaineReponse = chaineReponse + C
+
+			chaineReponse = chaineReponse + ' ' + ligneInference[1] + ' '
+			
+			if ligneInference[2] == 'A':
+				chaineReponse = chaineReponse + A
+			elif ligneInference[2] == 'B':
+				chaineReponse = chaineReponse + B
+			elif ligneInference[2] == 'C':
+				chaineReponse = chaineReponse + C
+
+			print(chaineReponse)
+	print("\n")
+
 
 
 
@@ -197,7 +265,58 @@ def inference_generique_triangle(terme1, relationsTerme1, typeRelation, terme2, 
 	"""
 
 	with open("src/schema_inference.json", 'r') as fichier:
-        dico = json.load(fichier)
+		dico = json.load(fichier)
 	
 	inferences = dico["triangle"]["all"]
-	inferenecs.append(dico["triangle"][typeRelation])
+	if (dico["triangle"].get(typeRelation) != None):
+		inferences.append(dico["triangle"][typeRelation])
+
+
+	for inferenceJSON in inferences:
+		A = terme1
+		B = terme2
+
+		#on s'occupe de récupérer les éléments "intermédiaires"
+		ligneC = inferenceJSON["C"].split(";")
+		
+		source, relation = ligneC[0], ligneC[1]
+
+		C = recup_elements()
+		if source == "A":
+			C = recup_elements( relationsTerme1, relation)
+		else:
+			C = recup_elements( relationsTerme2, relation)
+
+		
+		#une fois qu'on les a, on regarde quels intermédiaires sont liés avec le terme en question
+		ligneInference = inferenceJSON["inference"].split(";")
+		gauche, relationInf, droite = ligneInference[0], ligneInference[1], ligneInference[2]
+
+
+
+		if gauche == 'C':
+		# on va essayer de pas récupérer sur jeuxdemots le code de chaque truc (trop long et j'ai pas envie)
+		# mais on lieu de prendre les sortants de C, on regarde plutôt les entrants de B (ou A) avec le conversif
+			relationInf = conversif[relationInf]
+			gauche, droite = droite, gauche
+		
+		#maintenant qu'on a le C à droite, on regarde quel trucs récup avec quelles relations
+
+		if gauche == 'A':
+			elements_inference = recup_elements(relationsTerme1, relationInf)
+		else:
+			elements_inference = recup_elements(relationsTerme2, relationInf)
+		
+
+		#on a récupéré les éléments qu'il nous faut, maintenant on affiche l'inférence
+		print_inference_triangle(inferenceJSON, C, elements_inference, A, relation, B, relationsTerme1, relationsTerme2, edges )
+
+
+
+
+
+		
+
+			
+
+

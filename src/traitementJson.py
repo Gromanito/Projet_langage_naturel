@@ -13,7 +13,7 @@ import os
 
 
 #les relations qu'on utilise pour les inférences
-nomsRelationsQuonUtilise = ["r_isa", "r_has_part", "r_agent", "r_agent-1", "r_lieu", "r_lieu-1", "r_processus>agent", "r_processus>agent-1", "r_hypo", "r_syn", "r_lemma", "r_holo"]
+nomsRelationsQuonUtilise = ["r_isa", "r_has_part", "r_agent", "r_agent-1", "r_lieu", "r_lieu-1", "r_processus>agent", "r_processus>agent-1", "r_action-verbe", "r_verbe-action", "r_hypo", "r_syn", "r_lemma", "r_holo"]
 
 #les noeuds qui nous intéressent (pour pas trop en stocker dans le fichier traité)
 idsTypesNoeudsQuonUtilise = [1, 2, 8, 9, 666, 777]
