@@ -1,0 +1,25 @@
+{
+"triangle":{
+    "all":[
+        {  
+            "C":"A;r_lemma;C",
+            "inference": "C;rt;B"
+        }
+    ],
+    "r_proccess-1":[
+        {  
+            "C":"A;r_lemma;C",
+            "inference": "C;rt;B"
+        }
+    ]
+},
+
+"carre":{
+
+
+
+}
+
+
+
+}

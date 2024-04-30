@@ -10,7 +10,7 @@ conversifs = {"r_lieu":"r_lieu-1",\
 
 
 
-def inference_deductive(terme1, relationsTerme1, typeRelation, terme2, relationsTerme2, edges, nombreInferences=5):
+def inference_deductive(terme1, relationsTerme1, typeRelation, terme2, relationsTerme2, edges, nombreInferences=3):
 	""" trouver un générique pour lequel la réponse est vraie
 
 	pigeon r_agent-1 voler?
@@ -59,7 +59,7 @@ def inference_deductive(terme1, relationsTerme1, typeRelation, terme2, relations
 
 
 
-def inference_deductive_inversee(terme1, relationsTerme1, typeRelation, terme2, relationsTerme2, edges, nombreInferences=5):
+def inference_deductive_inversee(terme1, relationsTerme1, typeRelation, terme2, relationsTerme2, edges, nombreInferences=3):
 
 	""" trouver un générique (du terme2) pour lequel la réponse est vraie
 
@@ -91,7 +91,7 @@ def inference_deductive_inversee(terme1, relationsTerme1, typeRelation, terme2, 
 
 
 
-def inference_transitive(terme1, relationsTerme1, typeRelation, terme2, relationsTerme2, edges, nombreInferences=5):
+def inference_transitive(terme1, relationsTerme1, typeRelation, terme2, relationsTerme2, edges, nombreInferences=3):
 	""" trouver un objet z tel que terme1Rz  et zRterme2
 
 	chat r_lieu maison?
@@ -143,7 +143,7 @@ def inference_transitive(terme1, relationsTerme1, typeRelation, terme2, relation
 
 
 	
-def inference_inductive(terme1, relationsTerme1, typeRelation, terme2, relationsTerme2, edges, nombreInferences=5):
+def inference_inductive(terme1, relationsTerme1, typeRelation, terme2, relationsTerme2, edges, nombreInferences=3):
 	""" trouver un spécifique pour lequel la réponse est vraie
 
 	oiseau r_agent-1 voler?
@@ -185,3 +185,19 @@ def inference_inductive(terme1, relationsTerme1, typeRelation, terme2, relations
 			#specifique est un identifiant, on récupère le nom associé
 			print("\t" + "oui car      " + terme1 +  " r_hypo " + edges[specifique]["name"] + "     et     "   + edges[specifique]["name"] + " " + typeRelation + " " + terme2)
 	print("\n")
+
+
+
+
+
+
+def inference_generique_triangle(terme1, relationsTerme1, typeRelation, terme2, relationsTerme2, edges, nombreInferences=3):
+	"""
+	inférence qu'on a "trouvé"
+	"""
+
+	with open("src/schema_inference.json", 'r') as fichier:
+        dico = json.load(fichier)
+	
+	inferences = dico["triangle"]["all"]
+	inferenecs.append(dico["triangle"][typeRelation])

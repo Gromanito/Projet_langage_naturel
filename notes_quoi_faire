@@ -41,3 +41,30 @@ c'est à dire, on considère les relations comme des dico, et vu qu'y a plusieur
 et on peut faire un dico de dico
 
 
+
+
+
+si jaaaaaaamais j'essaie
+
+
+
+l'inférence c'est de A vers B
+
+
+donc ça peut être le "nom de la relation", genre si j'essaie de prouver 
+
+inductive ça ressemblerait à
+
+relationConcernée : "all",
+C : "A;r_hypo;C",
+D : null,
+inférence : "C;ArtB;B"
+
+
+
+pour le truc lemma
+
+ArtB : "x",
+C : "A;r_lemma;C",
+D : null,
+inférence : "C;"x";B"

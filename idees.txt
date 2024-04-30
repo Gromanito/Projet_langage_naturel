@@ -48,35 +48,24 @@ comme ça pendant les inférences ça manipule des id, on s'en fout un peu
 et quand on donne l'explication, on donne pas les id mais les noms des choses
 
 
-j'ai un dicionnaire "r_isa"    chat-> [liste de tout ce que peut être un chat]
-j'ai un dicionnaire "r_agent-1"      chat-> [liste de tout ... blabla]         
 
 
+pour les "schémas" spécifiques (je comprends pas trop ce que c'est)
+
+faudrait que j'arrive à modéliser une inférence (genre le triangle ou le carré)
 
 
-du couuuuup
+genre à chaque fois une inférence c'est A relation B 
+
+et on trouve des C ou des D tels que A autre relation C puis C autreRelation D 
+puis au final D encore autre relation B
 
 
-dans le main 
-j'aurais quelques dictionnaires des noeuds importants
-(n_term pour faire le lien identifiant/nom des objets,
-r_agent-1 prck on va bpc l'utiliser
-r_haspart aussi
-et d'autres relations)
+une inférence c'est sur     A   rt   B
 
-ces dicionnaires seront vides au début
 
-puis on pourra charger par exemple matou
-arborescence
-
-res/fichiersExploitables/matou/r_isa.json   
-res/fichiersExploitables/matou/n_term.json
-res/fichiersExploitables/matou/r_haspart.json
-                etc 
-
-ces fichiers json sont des listes (qui contiennent tous les trucs quoi jsp)
-et quand j'en ai besoin j'ajoute dans r_isa dico
-une clé "matou" et une liste : [le fichier /matou/r_isa.json   ]
+pour en faire on cherche d'autres rt avec A ou d'autres rt avec B
+et ensuite on les lie 
 
 
 
