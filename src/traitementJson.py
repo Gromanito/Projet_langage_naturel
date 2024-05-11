@@ -13,7 +13,16 @@ import os
 
 
 #les relations qu'on utilise pour les inférences
-nomsRelationsQuonUtilise = ["r_isa", "r_has_part", "r_agent", "r_agent-1", "r_lieu", "r_lieu-1", "r_processus>agent", "r_processus>agent-1", "r_action-verbe", "r_verbe-action", "r_hypo", "r_syn", "r_lemma", "r_holo"]
+nomsRelationsQuonUtilise = ["r_isa", "r_hypo",  "r_agent", "r_agent-1",\
+                            "r_lieu_action", "r_action_lieu", "r_lieu", "r_lieu-1",\
+                            "r_processus>agent", "r_processus>agent-1",\
+                            "r_action-verbe", "r_verbe-action",\
+                            "r_holo", "r_has_part", "r_syn", "r_lemma", \
+                            "r_verb_real", "r_own", "r_own-1", "r_instr", "r_instr-1",\
+                            "r_processus>instr", "r_processus>instr-1",\
+                            "r_der_morpho", "r_patient", "r_patient-1",\
+                            "r_carac", "r_carac-1", "r_sentiment", "r_sentiment-1",\
+                            "r_processus>patient", "r_processus>patient-1" ]
 
 #les noeuds qui nous intéressent (pour pas trop en stocker dans le fichier traité)
 idsTypesNoeudsQuonUtilise = [1, 2, 8, 9, 666, 777]
@@ -326,7 +335,7 @@ def ajouterRelationsAuJsonTraite(nomTerme, relationString):
 
     
     #la relation n'existe pas dans le fichier traité, on l'ajoute
-    if not relationString in relationsParTerme[nomTerme]:
+    if relationString not in relationsParTerme[nomTerme]:
         
         #on récupère le texte brut du terme avec que la relation indiquée
         with open("res/fichiersBruts/" + nomTerme + relationString + ".txt") as fichier:
@@ -363,7 +372,7 @@ def ajouterRelationsAuJsonTraite(nomTerme, relationString):
 
 
 
-            
+
             
 
 

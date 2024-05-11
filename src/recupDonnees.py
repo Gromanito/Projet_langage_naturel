@@ -59,7 +59,7 @@ def takeRawData(word: str, rtJSON=None, relationString=None,) -> str:
             #on regarde si le terme entré existe
             #(s'il n'existe pas la page est petite)
             if len(texteBrut) < 6000:
-                print("le terme semble ne pas exister")
+                print("le terme " + word + " semble ne pas exister")
                 return "TermeExistePas"
 
             #on enregistre le texte brut dans un fichier
@@ -71,38 +71,93 @@ def takeRawData(word: str, rtJSON=None, relationString=None,) -> str:
         
 
 
+
+
+
+def prepareEtRecupereLesDonneesExploitables(terme:str, dicoEdges:dict, dicoRelationsDesTermes:dict, relations_types=None) -> dict:
+
+    # fonction qui récupère les données des fichiers json pour les intégrer au programme
+    # (récupère les données depuis internet si besoin)
+
+
+    nodesTerme, relationsTerme = recupExploitable(terme, relations_types)
+
+    if nodesTerme == None or relationsTerme==None:
+        print("prblm lors de la recup des donénes")
+        return False
     
-#ancienne fonction pour récupérer les json et les inclure dans le programme
-#(on s'en sert plus)
-def recupExploitable(Terme: str, edges: dict) -> dict:
+    
+    #on a récup les données, maintenant on les "stocke" dans notre programme
+    idTerme = nodesTerme.pop("id")
+
+
+    #on rajoute les noeuds
+    for key, value in nodesTerme.items() :
+        dicoEdges[key] = value
+    
+    #on rajoute les relations
+    relationsTerme["id"] = idTerme
+    dicoRelationsDesTermes[terme] = relationsTerme
+
+    return True
+
+
+
+
+
+
+    
+
+def recupExploitable(terme, relations_types=None):
 
     """
-        Récupère les données json utiles et les transforme en dictionnaire
+        Récupère les données exploitables (et les crée si elles n'existent pas encore)
     """
     
-    returnedDict = {}
+
+    filePath = "res/fichiersExploitables/"+terme+"/"
 
 
-    filePath = "res/fichiersExploitables/"+Terme+"/"
-    with open(filePath+"e.json", "r", encoding="utf-8") as e_file :
-        current_term_edges = json.load(e_file)
+    if os.path.exists(filePath):
+        #les fichiers exploitables existent déjà, on a plus qu'à les charger
+        with  open(filePath + "e.json") as fichier:
+            nodesTerme = json.load(fichier)
+        with  open(filePath + "r.json") as fichier:
+            relationsTerme = json.load(fichier)
 
-        idTerme = current_term_edges.pop("id")
+    else:
+        # les fichiers exploitables n'existent pas, on le crée
 
+        if relations_types is None:
+            with open("res/fichiersExploitables/rt.json", 'r') as fichier:
+                relations_types = json.load(fichier)
+
+
+        #on récup les fichiers bruts depuis internet
+        chaineBruteTerme = takeRawData(terme, relations_types)
+        chaineBruteHypo = takeRawData(terme, relations_types, "r_hypo")
         
-        for key, value in current_term_edges.items() :
-            edges[key] = value
+
+        #s'il y a des problèmes lors de la récupération des données, on annule
+        if chaineBruteTerme == "EchecRequete" or chaineBruteHypo == "EchecRequete":
+            print("problème lors de la requête internet")
+            return None, None
+        
+        if chaineBruteTerme == "TermeExistePas":
+            return None, None
+
+
+        #on transforme le fichier brut en json
+        traitementJson.enregistrer_en_json(terme, chaineBruteTerme)
+
+        #on ajoute la relation r_hypo qui n'est pas chargé par défaut sur la page principale
+        dico = traitementJson.ajouterRelationsAuJsonTraite(terme, "r_hypo")
+
+        nodesTerme, relationsTerme = traitementJson.json_vers_exploitable(terme, dico, relations_types)
     
-    r_filesName = os.listdir(filePath)
-    r_filesName.remove("e.json")
-    for r_fileName in r_filesName :
-        with open(filePath+r_fileName, "r", encoding="utf-8") as r_file :
-            key = r_fileName.split('.')[0]
+    return nodesTerme, relationsTerme
 
-            returnedDict[key] = json.load(r_file)
-
-    returnedDict["id"] = idTerme
-    return returnedDict    
+   
 
 
 
