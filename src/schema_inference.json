@@ -4,7 +4,7 @@
         {   "nombreInf":2,
             "C":"A;r_isa",
             "inference": "C;rt;B",
-            "score":"0.5;1.5"
+            "score":"0.1;5"
         },
         {   "nombreInf":1,
             "C":"B;r_isa",
@@ -14,7 +14,7 @@
         {   "nombreInf":2,
             "C":"A;r_hypo",
             "inference": "C;rt;B",
-            "score":"1;1"
+            "score":"0.7;1"
         },
         {   "nombreInf":1,
             "C":"A;r_lemma",
@@ -26,7 +26,13 @@
             "C":"A;r_syn",
             "inference": "C;rt;B",
             "score":"0.2;0.5"
+        },
+        {   "nombreInf":1,
+            "C":"B;r_syn",
+            "inference": "A;rt;C",
+            "score":"1;0.5"
         }
+
     ],
 
     "r_agent-1":[
@@ -61,8 +67,23 @@
             "score":"1;1"
         },
         {   "nombreInf":1,
+            "C":"A;own",
+            "inference": "B;instr;C",
+            "score":"1;1"
+        },
+        {   "nombreInf":1,
+            "C":"A;r_has_part",
+            "inference": "B;instr;C",
+            "score":"1;1"
+        },
+        {   "nombreInf":1,
             "C":"A;r_has_part",
             "inference": "C;r_agent-1;B",
+            "score":"1;1"
+        },
+        {   "nombreInf":1,
+            "C":"B;r_verb_real",
+            "inference": "A;r_syn;C",
             "score":"1;1"
         }
 
@@ -75,7 +96,13 @@
             "C":"A;r_lieu",
             "inference": "C;r_lieu;B",
             "score":"1;1"
+        },
+        {   "nombreInf":2,
+            "C":"A;r_holo",
+            "inference": "C;r_lieu;B",
+            "score":"1;1"
         }
+
     ],
 
     "r_lieu-1":[
@@ -101,17 +128,70 @@
         }
     ],
     "r_carac":[
+        
+        {   "nombreInf":1,
+            "C":"A;r_carac",
+            "inference": "C;r_syn;B",
+            "score":"1;1"
+        },
+        {   "nombreInf":1,
+            "C":"A;r_agent-1",
+            "inference": "C;r_carac;B",
+            "score":"1;1"
+        },
+        {   "nombreInf":1,
+            "C":"A;r_sentiment",
+            "inference": "B;r_der_morpho;C",
+            "score":"1;1"
+        },
         {   "nombreInf":1,
             "C":"A;r_has_part",
-            "inference": "C;r_has_part;B",
+            "inference": "C;r_carac;B",
+            "score":"1;1"
+        },
+        {   "nombreInf":1,
+            "C":"A;r_own",
+            "inference": "C;r_carac;B",
+            "score":"1;1"
+        }
+    ],
+    "r_patient":[
+        {   "nombreInf":1,
+            "C":"B;r_lieu",
+            "inference": "C;r_carac;B",
             "score":"1;1"
         }
     ]
 },
 
 "carre":{
-
-
+    "all":[
+        {   "nombreInf":1,
+            "C":"A;r_syn",
+            "D":"B;r_syn",
+            "inference": "C;rt;D",
+            "score":"1;1;1"
+        }
+        
+    ],
+    "r_holo":[
+        {   "nombreInf":1,
+            "C":"A;r_syn",
+            "D":"C;r_holo",
+            "inference": "D;r_holo;B",
+            "score":"1;1;1"
+        }
+    ],
+    "r_has_part":[
+        {   
+            "nombreInf":1,
+            "C":"B;r_syn",
+            "D":"C;r_holo",
+            "inference": "A;r_has_part;D",
+            "score":"1;1;1"
+        }
+    ]
+    
 
 }
 

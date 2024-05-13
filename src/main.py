@@ -8,23 +8,13 @@ import time
 import os
 
 
-relationsTransitives = ["r_has_part", "r_holo", "r_syn", "r_lieu", "r_lieu-1"]
-
-# UTILISATION : mettre @timing comme annotation d'une fonction
-def timing(func):
-    def wrapper(*args, **kwargs):
-        start_time = time.time()
-        func(*args, **kwargs)
-        end_time = time.time()
-        print("Durée d'exécution : {:1.3}s".format(end_time - start_time))
-    return wrapper
 
 
-
-def recup_input_user():
+def recup_input_user(rtJSON):
 
     #bon j'aime pas trop les boucles infinies mais j'ai la flemme de faire autrement
     while True:
+        print("\n\n")
         entree = input("Veuillez entrer trois éléments séparés par des espaces ('exit' pour quitter) : ").strip()
         
         # Vérifier si l'utilisateur veut quitter le programme
@@ -38,6 +28,7 @@ def recup_input_user():
         if indiceRelation < 0:
             print("Veuillez indiquer une relation correcte")
             continue
+        
             
         terme1 = entree[ 0 :indiceRelation-1]
         relation = entree[indiceRelation:].split()[0]
@@ -46,6 +37,8 @@ def recup_input_user():
 
         elements = [terme1, relation, terme2]
         
+        if relation not in rtJSON:
+            print("la relation \"" + relation + "\" n'existe pas")
         
         
         return elements
@@ -59,8 +52,8 @@ def jouer():
 
     print("Bienvenue sur Super Inferator!\n\n")
 
-    dicoEdges = {}
-    dicoRelationsDesTermes = {}
+    dicoPrincipal = {"noeuds":{}, "relationsDesTermes":{}}
+    
 
     #on récup les types de relation et de noeud
     with  open("res/fichiersExploitables/rt.json") as fichier:
@@ -71,16 +64,16 @@ def jouer():
     #boucle infinie, on peut demander autant d'inférences que l'on veut
     #le programme s'arrête quand l'utilisateur rentre "exit"
     while True:
-        elements = recup_input_user()
+        elements = recup_input_user(relation_types)
         terme1, terme2, typeRelation = elements[0], elements[2], elements[1]
 
-        if dicoRelationsDesTermes.get(terme1) is None:
-            terme1aEteRecup = recupDonnees.prepareEtRecupereLesDonneesExploitables(elements[0], dicoEdges, dicoRelationsDesTermes, relation_types)
+        if dicoPrincipal["relationsDesTermes"].get(terme1) is None:
+            terme1aEteRecup = recupDonnees.prepareEtRecupereLesDonneesExploitables(terme1, dicoPrincipal, relation_types)
 
         relation = relation_types.get(elements[1])
 
-        if dicoRelationsDesTermes.get(terme2) is None:
-            terme2aEteRecup = recupDonnees.prepareEtRecupereLesDonneesExploitables(elements[2], dicoEdges, dicoRelationsDesTermes, relation_types)
+        if dicoPrincipal["relationsDesTermes"].get(terme2) is None:
+            terme2aEteRecup = recupDonnees.prepareEtRecupereLesDonneesExploitables(terme2, dicoPrincipal, relation_types)
         
 
         ttSestBienPasse = terme1aEteRecup and \
@@ -93,14 +86,10 @@ def jouer():
         
         
         else:
-            # inferences.inference_deductive(terme1, dicoRelationsDesTermes[terme1], typeRelation, terme2, dicoRelationsDesTermes[terme2], dicoEdges )
-            # inferences.inference_deductive_inversee(terme1, dicoRelationsDesTermes[terme1], typeRelation, terme2, dicoRelationsDesTermes[terme2], dicoEdges )
-            # inferences.inference_inductive(terme1, dicoRelationsDesTermes[terme1], typeRelation, terme2, dicoRelationsDesTermes[terme2], dicoEdges )
-            #@timing
-            inferences.inference_generique_triangle(terme1, dicoRelationsDesTermes[terme1], typeRelation, terme2, dicoRelationsDesTermes[terme2], dicoEdges )
-
-            # if typeRelation in relationsTransitives:
-            #     inferences.inference_transitive(terme1, dicoRelationsDesTermes[terme1], typeRelation, terme2, dicoRelationsDesTermes[terme2], dicoEdges )
+            
+            inferences.inference_generique_triangle(terme1, typeRelation, terme2, dicoPrincipal )
+            
+            inferences.inference_generique_carre(terme1, typeRelation, terme2, dicoPrincipal)
 
 
             print("\n\n")

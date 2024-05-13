@@ -1,0 +1,20 @@
+une liste des relations qui sont directement dans jeuxDeMots mais qui me paraissent erronées
+
+
+
+tigre r_syn fauve>animal>félin   (poids : 34)   
+r;12172540;137333;220342;5;34;0.41;3
+
+alors que 
+
+tigre r_syn félin>animal  (poids: -5)
+r;580584736;137333;247024;5;-5;-0.06;8
+
+
+
+
+Autruche d'Afrique r_agent-1 voler>déplacement aérien (poids : 30 , devrait être négatif)
+r;84551113;3180216;213857;24;30;0.526;2
+
+
+coq r_agent-1 pondre (poids : 30),    (jsuis pas sûr, coq c'est ptre l'appellation d'un chef et chef peut pondre un livre par exemple)

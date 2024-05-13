@@ -22,7 +22,8 @@ nomsRelationsQuonUtilise = ["r_isa", "r_hypo",  "r_agent", "r_agent-1",\
                             "r_processus>instr", "r_processus>instr-1",\
                             "r_der_morpho", "r_patient", "r_patient-1",\
                             "r_carac", "r_carac-1", "r_sentiment", "r_sentiment-1",\
-                            "r_processus>patient", "r_processus>patient-1" ]
+                            "r_processus>patient", "r_processus>patient-1",\
+                            "r_family", "r_has_conseq", "r_has_causatif" ]
 
 #les noeuds qui nous intéressent (pour pas trop en stocker dans le fichier traité)
 idsTypesNoeudsQuonUtilise = [1, 2, 8, 9, 666, 777]
@@ -88,7 +89,7 @@ def json_vers_exploitable(nomTerme, dicoJson, rtJSON=None):
         objet_json = json.dumps(nodes, indent=4, ensure_ascii=False)
         with open( directoryExploitable + "e.json", 'w') as fichier:
             fichier.write(objet_json)
-            print("noeuds enregistrés")
+            #print("noeuds enregistrés")
     
 
     #les relations n'ont pas encore été créées
@@ -133,7 +134,7 @@ def json_vers_exploitable(nomTerme, dicoJson, rtJSON=None):
         #on enregistre les relations en json
         with open( directoryExploitable + "r.json", 'w') as fichier:
             fichier.write(json.dumps(toutesLesRelations, indent=4, ensure_ascii=False))
-            print("relations enregistrées")
+            #print("relations enregistrées")
         
     
     return nodes, toutesLesRelations
@@ -153,7 +154,7 @@ def enregistrer_en_json(terme, texteBrut=None, rtJSON = None ):
 
     nom_fichier_json = "res/fichiersTraites/"+terme+".json"
     dico = None
-
+    global idsTypesNoeudsQuonUtilise
 
     #on fait le traitement si le fichier n'existe pas déjà
     if not os.path.exists(nom_fichier_json):
@@ -190,12 +191,17 @@ def enregistrer_en_json(terme, texteBrut=None, rtJSON = None ):
             # si c'est c'est un noeud
             if ligne.startswith('e;'):
                 identifiant, noeud = cree_noeud_a_partir_dune_ligne(ligne)
-                edges[identifiant] = noeud
+                if noeud["node_type"] in idsTypesNoeudsQuonUtilise:
+                    edges[identifiant] = noeud
 
             #si c'est une relation
             elif ligne.startswith('r;'):
                 identifiant, relation = cree_relation_a_partir_dune_ligne(ligne)
-                relations[identifiant] = relation
+
+                #des fois les relations se font sur des noeuds qu'on regarde pas, il faut les filtrer
+                #(on suppose que les noeuds sont remplis en premier et que donc ça produit pas d'erreurs de faire ça)
+                if edges.get(str(relation["node1"])) is not None and edges.get(str(relation["node2"])) is not None:
+                    relations[identifiant] = relation
             
             #on retient quelles sont les relations qui existent dans ce fichier
             elif ligne.startswith('rt;'):
@@ -217,13 +223,13 @@ def enregistrer_en_json(terme, texteBrut=None, rtJSON = None ):
 
         with open(nom_fichier_json, 'w') as fichier:
             fichier.write(objet_json)
-            print("fichier traité json enregistré")
+            #print("fichier traité json enregistré")
         
 
         #on renseigne les relations qui existent dans le fichier relationsParTerme
         with open( "res/fichiersTraites/relationsParTerme.json", 'w') as fichier:
             fichier.write(json.dumps(relationsParTerme, indent=4, ensure_ascii=False))
-            print("noeuds enregistrés")
+            #print("noeuds enregistrés")
         
     return dico
 
@@ -321,6 +327,7 @@ def ajouterRelationsAuJsonTraite(nomTerme, relationString):
     """
 
     nom_fichier_json = "res/fichiersTraites/" + nomTerme + ".json"
+    global idsTypesNoeudsQuonUtilise
 
     #on récupère le json traité
     with open(nom_fichier_json, 'r') as fichier:
@@ -347,11 +354,16 @@ def ajouterRelationsAuJsonTraite(nomTerme, relationString):
 
             if ligne.startswith('e;'):
                 identifiant, noeud = cree_noeud_a_partir_dune_ligne(ligne)
-                dico["e"][identifiant] = noeud
+                if noeud["node_type"] in idsTypesNoeudsQuonUtilise:
+                    dico["e"][identifiant] = noeud
+                
                 
             elif ligne.startswith('r;'):
                 identifiant, relation = cree_relation_a_partir_dune_ligne(ligne)
-                dico["r"][identifiant] = relation
+
+                if dico["e"].get(str(relation["node1"])) is not None and dico["e"].get(str(relation["node2"])) is not None:
+                    dico["r"][identifiant] = relation
+                
 
 
         #on enregistre le nouveau fichier json augmenté avec la relation
@@ -359,7 +371,7 @@ def ajouterRelationsAuJsonTraite(nomTerme, relationString):
 
         with open(nom_fichier_json, 'w') as fichier:
             fichier.write(objet_json)
-            print("fichier traité json enregistré (avec nouvelle relation)")
+            #print("fichier traité json enregistré (avec nouvelle relation)")
 
 
         #on renseigne que cette relation existe maintenant bien dans le fichier traité

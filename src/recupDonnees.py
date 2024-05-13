@@ -1,4 +1,4 @@
-import requests
+from requests_html import HTMLSession
 import os
 import json
 
@@ -41,31 +41,55 @@ def takeRawData(word: str, rtJSON=None, relationString=None,) -> str:
         if relationString != None:
             url = url + str(rtJSON[relationString])
 
-    
-        #requête internet
-        response = requests.get(url)
+        this_session = HTMLSession()
+        response = this_session.get(url, timeout=20)
+        
+
+        #requête internet (ancien)
+        #response = requests.get(url)
     
         #la requête a échoué
         if response.status_code != 200:
-            print("La requête a échoué avec le code :", response.status_code)
+            #print("La requête a échoué avec le code :", response.status_code)
             return "EchecRequete"
 
 
         else:
             # la requête a réussie
-            texteBrut = response.text
+            response.html.render()
 
+            # affiche le texte de la page (pas le html) donc illisible)
+            #texteBrut = response.html.text
+
+            #récupère des bytes
+            #texteBrut = response.html.raw_html
+
+            #y a les accents mais tjrs pas le '>' (mettre ISO machine dans le encoding de with open)
+            #texteBrut = response.html.raw_html.decode('ISO-8859-1')
+            
+            # c'est des bytes, pas une str
+            # texteBrut = response.content
+
+            #marche mais pas pour les accents
+            # texteBrut = response.content.decode('ISO-8859-1')
+
+            #marche juste pas 
+            # texteBrut = response.content.decode('utf-8')
+
+
+            #bon bah ça marche mais j'ai peur que ça fasse comme avant et que des fois on récup bien la page et des fois non (enfin on la récup mais la page est pas encore chargée quoi)
+            texteBrut = response.text
 
             #on regarde si le terme entré existe
             #(s'il n'existe pas la page est petite)
-            if len(texteBrut) < 6000:
-                print("le terme " + word + " semble ne pas exister")
+            if len(texteBrut) < 5500:
+                #print("le terme " + word + " semble ne pas exister")
                 return "TermeExistePas"
 
             #on enregistre le texte brut dans un fichier
             with open(fileName, 'w', encoding='utf-8') as fichier:
                 fichier.write(texteBrut)
-                print("Contenu brut enregistré dans le fichier " + fileName)
+                #print("Contenu brut enregistré dans le fichier " + fileName)
             
     return texteBrut
         
@@ -74,16 +98,17 @@ def takeRawData(word: str, rtJSON=None, relationString=None,) -> str:
 
 
 
-def prepareEtRecupereLesDonneesExploitables(terme:str, dicoEdges:dict, dicoRelationsDesTermes:dict, relations_types=None) -> dict:
+def prepareEtRecupereLesDonneesExploitables(terme:str, dicoPrincipal:dict, relations_types=None) -> dict:
 
     # fonction qui récupère les données des fichiers json pour les intégrer au programme
     # (récupère les données depuis internet si besoin)
-
+    dicoEdges = dicoPrincipal["noeuds"]
+    dicoRelationsDesTermes = dicoPrincipal["relationsDesTermes"]
 
     nodesTerme, relationsTerme = recupExploitable(terme, relations_types)
 
     if nodesTerme == None or relationsTerme==None:
-        print("prblm lors de la recup des donénes")
+        #print("prblm lors de la recup des donénes")
         return False
     
     
@@ -127,6 +152,7 @@ def recupExploitable(terme, relations_types=None):
 
     else:
         # les fichiers exploitables n'existent pas, on le crée
+        print("préparation des données pour le terme : " + terme + "  (téléchargement, traitement ...)")
 
         if relations_types is None:
             with open("res/fichiersExploitables/rt.json", 'r') as fichier:
