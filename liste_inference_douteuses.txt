@@ -17,4 +17,5 @@ Autruche d'Afrique r_agent-1 voler>déplacement aérien (poids : 30 , devrait ê
 r;84551113;3180216;213857;24;30;0.526;2
 
 
-coq r_agent-1 pondre (poids : 30),    (jsuis pas sûr, coq c'est ptre l'appellation d'un chef et chef peut pondre un livre par exemple)
+coq r_agent-1 pondre (poids : 30, devrait être négatif)    (pour celle là jsuis pas sûr, coq c'est ptre l'appellation d'un chef et chef peut pondre un livre/un repas/une recette)
+r;3004533;117146;112239;24;30;0.3;4

@@ -1,5 +1,5 @@
-res/fichiersBruts/
-res/fichiersExploitables/
-res/fichiersTraites/
+res/fichiersBruts/*
+res/fichiersExploitables/*
+res/fichiersTraites/*
 
 !res/fichiersTraites/rt.json

@@ -253,7 +253,7 @@ def renvoieNameApartirDuneLigne(ligne):
 #fonction pour créer un dictionnaire "noeud" à partir d'une ligne
 def cree_noeud_a_partir_dune_ligne(ligne):
 
-    ligne = ligne.strip()
+    ligne = ligne.strip().replace("&gt;", ">")
 
     #on récupère le nom du terme
     nom, ligne = renvoieNameApartirDuneLigne(ligne)

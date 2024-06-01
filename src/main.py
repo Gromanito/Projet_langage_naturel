@@ -50,7 +50,7 @@ def jouer():
 
     global relationsTransitives
 
-    print("Bienvenue sur Super Inferator!\n\n")
+    print("Bienvenue sur un programme qui fait des inférences!\n\n")
 
     dicoPrincipal = {"noeuds":{}, "relationsDesTermes":{}}
     
@@ -86,7 +86,18 @@ def jouer():
         
         
         else:
+
             
+            #on regarde déjà si la relation est connue dans la base de connaissance
+            idTerme2 = dicoPrincipal["relationsDesTermes"][terme2]["id"]
+
+            if dicoPrincipal["relationsDesTermes"][terme1][elements[1]]["sortant"].get(idTerme2) is None:
+                print("\nla relation n'existe pas dans la base de connaissance\n")
+            else:
+                print("\nla relation existe dans la base de connaissance ! (poids: " + str(dicoPrincipal["relationsDesTermes"][terme1][elements[1]]["sortant"][idTerme2]["weight"]) + ")")
+
+
+
             inferences.inference_generique_triangle(terme1, typeRelation, terme2, dicoPrincipal )
             
             inferences.inference_generique_carre(terme1, typeRelation, terme2, dicoPrincipal)

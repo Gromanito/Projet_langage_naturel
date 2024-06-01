@@ -6,13 +6,22 @@ les trucs à installer :
 pip install requests-html
 
 
-pour lancer, se mettre à la racine du projet et lancer la commande 
+pour initialiser le projet, se mettre à la racine du projet et lancer la commande
+
+python3 ./src/updateTermes.py
+
+
+ensuite (toujours à la racine) lancer la commande 
 
 python3 ./src/main.py 
 
-ou bien (pour refaire des anciennes inférences)
+
+ou bien (pour avoir l'historique des anciennes inférences)
 
 rlwrap python3 ./src/main.py 
+
+
+
 
 
 
@@ -46,12 +55,12 @@ le format json pour les relation triangles sont comme ceci :
     - nombreInf désigne le nombre d'inférences à montrer pour ce schéma
 
 
-    - "C" désigne comment sont extraits les noeuds intermédiaires à partir de quel terme et avec quelle relation (ici, prendre tous les x tels que A r_isa x)
+    - "C" désigne comment sont extraits les noeuds intermédiaires, c'est à dire à partir de quel terme et avec quelle relation (ici, prendre tous les x tels que A r_isa x)
 
 
     -"inference" désigne le lien entre les intermédiaires et le noeud à atteindre, et avec quelle relation
-
     ici tous les x tels que x rt B 
+
     rt désigne la relation demandée en entrée, puisque l'inférence déductive est générique, cela peut être n'importe laquelle
 
     par exemple  A r_agent-1 B    ->     A r_isa x   &   x r_agent-1 B
@@ -70,8 +79,11 @@ le format json pour les relation triangles sont comme ceci :
 
 Calcul du score (triangle):
 
-Pour savoir si une inférence  A rt1 C  &  C rt2 B   est une bonne inférence, on se réfère au poids de    A rt1 C   et de    C rt2 B
-si jamais un poids est plus important qu'un autre on modifie son importance comme cela:
+Pour savoir si une inférence  A rt1 C  &  C rt2 B   est une bonne inférence, on se réfère au poids de    A rt1 C   et de    C rt2 B  (plus leurs poids sont élevés, + il devrait s'agir d'une bonne inférence)
+
+
+
+si jamais  un poids est plus important qu'un autre on modifie son importance comme cela:
 
 
 soit p1 le poids de A rt1 C  et p2 le poids de C rt2 B
@@ -91,11 +103,13 @@ on calcul ensuite le score qui est une simple multiplication:
 
 score = (p1*impRel1) * (p2 * impRel2)
 
-((((puisque la multiplication est associative, on n'impacte pas vraiment le poids directement de p1 et de p2, mais on modifie le score global p1*p2 avec des "bonus" et des "malus" selon l'inférence ))))
+((((note pour moi même : puisque la multiplication est associative, on n'impacte pas vraiment le poids directement de p1 et de p2, mais on modifie le score global p1*p2 avec des "bonus" et des "malus" selon l'inférence ))))
     
 
 
 
 
 inférence carré: c'est la même chose mais y a deux intermédiaires cette fois
+(j'ai pas envie d'écrire pitié)
 
+la seule différence est le besoin de télécharger des termes pendant l'inférence

@@ -1,4 +1,11 @@
-# fonction pour update les fichiers exploitables (pas avoir à manuellement effacer tous les fichiers etc
+# fonction pour update les fichiers exploitables (pas avoir à manuellement effacer tous les fichiers etc)
+
+"""
+les fichiers .txt téléchargés sur jeuxDeMots n'ont pas besoin (en général) d'être re-téléchargés.
+Ce fichier sert juste à retraité tous les fichiers .txt en fichiers json exploitables
+(s'il y a bcp de fichiers calcul peut être long et coûteux !!!!)
+
+"""
 
 import recupDonnees
 import os

@@ -189,7 +189,7 @@ def inference_triangle(inferenceJSON, intermediaires, elements_inference, terme1
 			
 			#c'est pour pas qu'on télécharge trop non plus t'as capté
 			compteur += 1
-			if compteur > 5:
+			if compteur > 3:
 				break
 
 			nodesIntermediaire, relationsIntermediaire = recupDonnees.recupExploitable(edges[intermediaire]["name"])
