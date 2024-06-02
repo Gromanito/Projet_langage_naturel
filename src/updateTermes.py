@@ -61,6 +61,16 @@ def rtjson_vers_rtExploitable(nomFichier):
 
 
 
+#on crée les répertoires "res/fichiersBruts" et "res/fichiersExploitables" prck je sais pas pk git veut pas les mettre
+
+
+if os.path.exists("res/fichiersBruts"):
+    os.makedirs("res/fichiersBruts")
+
+if os.path.exists("res/fichiersExploitables"):
+    os.makedirs("res/fichiersExploitables")
+
+
 
 
 # Utilisation de la fonction pour vider un répertoire
