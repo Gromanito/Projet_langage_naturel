@@ -1,8 +1,7 @@
 res/fichiersBruts/*
 res/fichiersExploitables/*
 res/fichiersTraites/*
-
-infoNoeuds/relationsParTerme.json
+res/infoNoeuds/relationsParTerme.json
 
 archives(poubelle)/*
 

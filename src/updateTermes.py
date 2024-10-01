@@ -45,8 +45,8 @@ if not os.path.exists("res/fichiersBruts"):
 if not os.path.exists("res/fichiersExploitables"):
     os.makedirs("res/fichiersExploitables")
 
-if not os.path.exists("res/fichiersBruts"):
-    os.makedirs("res/fichiersBruts")
+if not os.path.exists("res/fichiersTraites"):
+    os.makedirs("res/fichiersTraites")
 
 if not os.path.exists("res/infoNoeuds"):
     os.makedirs("res/infoNoeuds")
