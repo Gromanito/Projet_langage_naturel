@@ -2,4 +2,7 @@ res/fichiersBruts/*
 res/fichiersExploitables/*
 res/fichiersTraites/*
 
-!res/fichiersTraites/rt.json
+infoNoeuds/relationsParTerme.json
+
+archives(poubelle)/*
+

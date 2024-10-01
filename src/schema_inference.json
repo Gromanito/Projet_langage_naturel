@@ -57,7 +57,7 @@
             "score":"1;1"
         },
         {   "nombreInf":1,
-            "C":"A;own",
+            "C":"A;r_own",
             "inference": "B;r_processus>instr;C",
             "score":"1;1"
         },
@@ -86,8 +86,6 @@
             "inference": "A;r_syn;C",
             "score":"1;1"
         }
-
-
 
     ],
 

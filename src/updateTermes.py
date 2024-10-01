@@ -7,7 +7,7 @@ Ce fichier sert juste à retraité tous les fichiers .txt en fichiers json explo
 
 """
 
-import recupDonnees
+import chargerDonnees
 import os
 import json
 
@@ -15,14 +15,9 @@ import json
 def supprimer_contenu_repertoire_traite(repertoire):
     for element in os.listdir(repertoire):
         
-        if element != "rt.json" and element != "nt.json":
-
-            chemin_element = os.path.join(repertoire, element)
-            # Si c'est un fichier, le supprimer
-
-            if os.path.isfile(chemin_element):
-                os.remove(chemin_element)
-                print(f"Fichier supprimé : {chemin_element}")
+        chemin_element = os.path.join(repertoire, element)
+        os.remove(chemin_element)
+    print("tous les fichiers sont supprimés du répertoire Traite")
             
 
 
@@ -33,54 +28,39 @@ def supprimer_contenu_repertoire_exploitable(repertoire):
             supprimer_contenu_repertoire_exploitable(chemin_element)
             # Supprimer le dossier vide une fois qu'il est vidé
             os.rmdir(chemin_element)
-            print(f"Dossier supprimé : {chemin_element}")
         if os.path.isfile(chemin_element):
                 os.remove(chemin_element)
-                print(f"Fichier supprimé : {chemin_element}")
-
-
-
-
-
-def rtjson_vers_rtExploitable(nomFichier):
-    # Charger le JSON traité
-    with open(nomFichier, 'r') as fichier:
-        objet_json = json.load(fichier)
     
-    # Initialiser le dictionnaire résultant
-    dictionnaireRT = {}
-    
-    # Parcourir chaque élément de la liste JSON
-    for element in objet_json:
-        rtid = int(element["rtid"])
-        name = element["name"]
-        dictionnaireRT[name] = rtid
-        dictionnaireRT[rtid] = name
-    
-    return dictionnaireRT
+                
+
 
 
 
 #on crée les répertoires "res/fichiersBruts" et "res/fichiersExploitables" prck je sais pas pk git veut pas les mettre
 
 
-if os.path.exists("res/fichiersBruts"):
+if not os.path.exists("res/fichiersBruts"):
     os.makedirs("res/fichiersBruts")
 
-if os.path.exists("res/fichiersExploitables"):
+if not os.path.exists("res/fichiersExploitables"):
     os.makedirs("res/fichiersExploitables")
 
+if not os.path.exists("res/fichiersBruts"):
+    os.makedirs("res/fichiersBruts")
 
+if not os.path.exists("res/infoNoeuds"):
+    os.makedirs("res/infoNoeuds")
 
 
 # Utilisation de la fonction pour vider un répertoire
 
 supprimer_contenu_repertoire_traite("res/fichiersTraites")
 supprimer_contenu_repertoire_exploitable("res/fichiersExploitables")
+print("tous les fichiers du dossier Exploitable sont supprimés")
 
 
 
-with open("res/fichiersTraites/relationsParTerme.json", 'w') as f:
+with open("res/infoNoeuds/relationsParTerme.json", 'w') as f:
     f.write("{}")
 
 
@@ -88,7 +68,7 @@ with open("res/fichiersTraites/relationsParTerme.json", 'w') as f:
 
 
 
-
+"""
 #je recrée le fichier rt.json et nt.json exploitables
 dico = rtjson_vers_rtExploitable("res/fichiersTraites/rt.json")
 dicoJson = json.dumps(dico, indent=4)
@@ -101,7 +81,7 @@ dico = rtjson_vers_rtExploitable("res/fichiersTraites/rt.json")
 dicoJson = json.dumps(dico, indent=4)
 
 #bon tant pis pour le nt.json mais en vrai on s'en sert pas trop donc bon
-
+"""
 
 
 
@@ -111,10 +91,10 @@ dicoJson = json.dumps(dico, indent=4)
 
 #mtn qu'on a tout supprimé, on recrée tout tout tout (ça peut être lourd niveau mémoire, je verrai bien)
 
-with open("res/fichiersExploitables/rt.json", 'r') as fichier:
+with open("res/infoNoeuds/rt.json", 'r') as fichier:
     relations_types = json.load(fichier)
 
 
 for element in os.listdir("res/fichiersBruts"):
     if "r_hypo" not in element:
-        recupDonnees.recupExploitable(element[0:element.find(".txt")], relations_types)
+        chargerDonnees.recup_exploitable(element[0:element.find(".txt")])
