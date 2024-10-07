@@ -102,11 +102,11 @@ def jouer():
             print("la relation existe dans JDM !")
             print("\n")
             print(terme1 + " " + rt + " " + terme2 + " | " + str(noeudTerme1.get_sortants(rt)[noeudTerme2.get_id()]) )
-            print("\n\n")
+            
         else:
             print("la relation n'existe pas dans JDM")
 
-
+        print("\n\n")
 
 
         #on fait d'abord les inférences triangles

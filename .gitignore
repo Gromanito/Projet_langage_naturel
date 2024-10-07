@@ -1,7 +1,6 @@
-res/fichiersBruts/*
-res/fichiersExploitables/*
-res/fichiersTraites/*
-res/infoNoeuds/relationsParTerme.json
-
-archives(poubelle)/*
+partie_inference/res/fichiersBruts/*
+partie_inference/res/fichiersExploitables/*
+partie_inference/res/fichiersTraites/*
+partie_inference/res/infoNoeuds/relationsParTerme.json
+partie_inference/archives(poubelle)/*
 
