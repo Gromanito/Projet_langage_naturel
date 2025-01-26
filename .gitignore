@@ -1,6 +1,8 @@
 partie_inference/*
 noeudsJDM/fichiersExploitables/*
 noeudsJDM/fichiersTraites/*
+!noeudsJDM/fichiersExploitables/.gitkeep
+!noeudsJDM/fichiersTraites/.gitkeep
 noeudsJDM/LEXICALNET-JEUXDEMOTS-ENTRIES-MWE.txt
 
 
