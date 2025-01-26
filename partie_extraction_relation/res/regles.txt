@@ -1,0 +1,354 @@
+# Det + Nom = GN
+begin;
+$x r_pos Det:
+& $y r_pos Nom:
+& $x r_succ $y
+==>
+$n < [$x, $y]
+& $n r_pos GN:
+& $n r_chef $y
+& $n r_sub_node:Det: $x
+& $n r_sub_node:Nom: $y
+end;
+
+# GNDET: -> GN
+begin;
+$x r_pos GNDET:
+==>
+$x r_pos GN:
+end;
+
+
+
+
+
+#Pre + GN = GNPre:
+begin;
+$x r_pos Pre:
+& $y r_pos GN:
+& $x r_succ $y
+==>
+$n < [$x, $y]
+& $n r_pos GNPre:
+& $n r_chef $y
+& $n r_sub_node:Pre: $x
+& $n r_sub_node:GN: $y
+end;
+
+
+#Pre + Nom = GNPre: (apparemment)
+begin;
+$x r_pos Pre:
+& $y r_pos Nom:
+& $x r_succ $y
+==>
+$n < [$x, $y]
+& $n r_pos GNPre:
+& $n r_chef $y
+& $n r_sub_node:Pre: $x
+& $n r_sub_node:Nom: $y
+end;
+
+
+#Nom + GNPre = Nom (complément du nom)
+begin;
+$x r_pos Nom:
+& $y r_pos GNPre:
+& $x r_succ $y
+==>
+$n < [$x, $y]
+& $n r_pos Nom:
+& $n r_chef $x
+& $n r_sub_node:Nom: $x
+& $n r_sub_node:CDN: $y
+end;
+
+
+
+#GN + GV + '.'  : ça crée une phrase
+begin;
+$x r_pos GN:
+& $y r_pos GV:
+& $z = "."
+& $x r_succ $y
+& $y r_succ $z
+==>
+$n < [$x, $y]
+& $n r_pos S:
+& $n r_chef $x
+& $n r_sub_node:GN: $x
+& $n r_sub_node:GV: $y
+end;
+
+#PronomPersonnel + GV  :  
+begin;
+$x r_pos Pro:Pers
+& $y r_pos GV:
+& $x r_succ $y
+==>
+$n < [$x, $y]
+& $n r_pos S:
+& $n r_chef $x
+& $n r_sub_node:Pro:Pers $x
+& $n r_sub_node:GV: $y
+end;
+
+
+#GV + GN : GV (GV + COD)
+begin;
+$x r_pos GV:
+& $y r_pos GN:
+& $x r_succ $y
+==>
+$n < [$x,$y]
+& $n r_pos GV:
+& $n r_chef $x
+& $n r_sub_node:GV: $x
+& $n r_sub_node:COD: $y
+end;
+
+
+#GV + "de" + GN : GV (GV + COI)
+begin;
+$x r_pos GV:
+& $y = "de"
+& $z r_pos GN:
+& $x r_succ $y
+& $y r_succ $z
+==>
+$n < [$x, $y, $z]
+& $n r_pos GV:
+& $n r_chef $x
+& $n r_sub_node:GV: $x
+& $n r_sub_node:COI: $z
+end;
+
+
+#GV + "à" + GN : GV (GV + COI)
+begin;
+$x r_pos GV:
+& $y = "à"
+& $z r_pos GN:
+& $x r_succ $y
+& $y r_succ $z
+==>
+$n < [$x, $y, $z]
+& $n r_pos GV:
+& $n r_chef $x
+& $n r_sub_node:GV: $x
+& $n r_sub_node:COI: $z
+end;
+
+
+# on peut skip un ajectif askip (dans le cours)
+begin;
+$x r_pos Adj:
+& $y r_succ $x
+& $x r_succ $z
+==>
+$y r_succ $z
+& $z r_pred $y
+end;
+
+#Adj + Nom = Nom  
+begin;
+$x r_pos Adj:
+& $y r_pos Nom:
+& $x r_succ $y
+==>
+$n < [$x,$y]
+& $n r_pos Nom:
+& $n r_chef $y
+& $n r_sub_node:Adj: $x
+& $n r_sub_node:Nom: $y
+end;
+
+
+#Nom + Adj = Nom
+begin;
+$x r_pos Nom:
+& $y r_pos Adj:
+& $x r_succ $y
+==>
+$n < [$x,$y]
+& $n r_pos Nom:
+& $n r_chef $x
+& $n r_sub_node:Adj: $y
+& $n r_sub_node:Nom: $x
+end;
+
+
+
+#on peut skip les adverbes, relou
+begin;
+$x r_pos Adv:
+& $y r_succ $x
+& $x r_succ $z
+==>
+$y r_succ $z
+& $z r_pred $y
+end;
+
+
+#Si on a une phrase et un point, on peut skip (pour avoir l'extraction de toutes les phrases)
+begin;
+$x r_pos S:
+$y r_pos Punc:
+& $x r_succ $y
+& $b r_succ $x
+& $y r_succ $a
+==>
+$b r_succ $a
+& $a r_pred $b
+end;
+
+
+
+#GN + Pro + GV  : et ça crée une phrase (et faudrait référencer le pronom mais vasy)
+begin;
+$x r_pos GN:
+& $y r_pos Pro:
+& $z r_pos GV:
+& $x r_succ $y
+& $y r_succ $z
+==>
+$n < [$x, $y, $z]
+& $n r_pos S:
+& $n r_chef $x
+& $n r_sub_node:GN: $x
+& $n r_sub_node:Pro: $y
+& $n r_sub_node:GV: $z
+end;
+
+
+
+# verbe avec "ne pas"
+begin;
+$x = "ne":
+& $y r_pos Ver:Inf
+& $z = "pas":
+& $x r_succ $y
+& $y r_succ $z
+==>
+$n < [$x, $y, $z]
+& $n r_pos Ver:Inf
+& $n r_sub_node:Ver:Inf $x
+& $n r_chef $y
+end;
+
+
+# un verbe est un groupe verbal (qu'on augmentera)
+# je mets verbe infinitif pour pas dériver trop de relations avec le verbe conjugé, on veut juste le verbe à l'infinitif nous
+begin;
+$x r_pos Ver:Inf
+==>
+$x r_pos GV:
+end;
+
+
+# un verbe à la forme passive est un groupe verbal à la forme passive (qu'on augmentera)
+begin;
+$x r_pos Ver:Passive:
+==>
+$x r_pos GV:Passive:
+end;
+
+
+# passé composé avec être
+begin;
+$x = "être":
+& $y r_pos Ver:PPas
+& $x r_succ $y
+==>
+$n < [$x, $y]
+& $n r_pos Ver:Passive:
+& $n r_pos Ver:
+& $n r_sub_node:Ver: $x
+& $n r_sub_node:Ver: $y
+& $n r_chef $y
+end;
+
+# passé composé avec avoir
+begin;
+$x = "avoir":
+& $y r_pos Ver:PPas
+& $x r_succ $y
+==>
+$n < [$x, $y]
+& $n r_pos Ver:
+& $n r_sub_node:Ver: $x
+& $n r_sub_node:Ver: $y
+& $n r_chef $y
+end;
+
+
+# forme passive "a été ..."
+begin;
+$x = "avoir":
+& $y = "été"
+& $z r_pos Ver:PPas
+& $x r_succ $y
+& $y r_succ $z
+==>
+$n < [$x, $y, $z]
+& $n r_pos Ver:
+& $n r_pos Ver:Passive:
+& $n r_sub_node:Ver: $x
+& $n r_sub_node:Ver: $y
+& $n r_sub_node:Ver: $z
+& $n r_chef $z
+end;
+
+
+
+# GVpassif + "par" + GN     groupe verbal à la forme passive
+begin;
+$x r_pos GV:Passive:
+& $y = "par"
+& $z r_pos GN:
+& $x r_succ $y
+& $y r_succ $z
+==>
+$n < [$x, $y, $z]
+& $n r_pos GV:Passive:
+& $n r_chef $x
+& $n r_sub_node:GV:Passive: $x
+& $n r_sub_node:Pre: $y
+& $n r_sub_node:GN: $z
+end;
+
+
+
+# si j'ai  GN + GV:Passive: , ça crée une phrase
+#
+begin;
+$x r_pos GN:
+& $y r_pos GV:Passive:
+& $x r_succ $y
+==>
+$n < [$x, $y]
+& $n r_pos S:
+& $n r_sub_node:GN: $x
+& $n r_sub_node:GV:Passive: $y
+& $n r_chef $x
+end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+#je mets cette règle en dernier (propage les r_chef, et donc c'est mieux pour moi si je le fais quand tous les r_chef ont été créé)
+begin;
+$x r_chef $y
+& $y r_chef $z
+==>
+$x r_chef $z
+end;

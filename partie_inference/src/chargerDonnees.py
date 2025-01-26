@@ -8,7 +8,7 @@ ensemble des fonctions pour manipuler / traiter / charger les données de jeu de
 from requests_html import HTMLSession
 import os
 import json
-
+import requests
 
 
 #les relations qu'on utilise pour les inférences
@@ -23,7 +23,7 @@ nomsRelationsQuonUtilise = ["r_isa", "r_hypo",  "r_agent", "r_agent-1",\
                             "r_carac", "r_carac-1", "r_sentiment", "r_sentiment-1",\
                             "r_processus>patient", "r_processus>patient-1",\
                             "r_family", "r_has_conseq", "r_has_causatif",\
-                            "r_pourvoyeur", "r_has_beneficiaire" ]
+                            "r_pourvoyeur", "r_has_beneficiaire", "r_pos" ]
 
 
 #les noeuds qui nous intéressent (pour pas trop en stocker dans le fichier traité)
@@ -114,6 +114,7 @@ def telecharge_fichier_brut(mot: str, relation=None) -> str:
             texteBrut = fichier.read()
 
     return texteBrut
+
 
 
 

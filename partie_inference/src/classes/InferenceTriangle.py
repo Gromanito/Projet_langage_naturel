@@ -60,6 +60,8 @@ class InferenceTriangle(Inference):
             #on regarde d'abord les entrants sur le truc à droite (pour pas avoir à télécharger des trucs depuis C)
             if self.gaucheInf == 'C':
 
+                print(droiteTerme.get_entrants(self.relationInf))
+                
                 elements_inference.update(droiteTerme.get_entrants(self.relationInf))
                 #on teste les sortants mais sur le conversif
                 if yAunConversif:

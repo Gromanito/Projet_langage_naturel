@@ -1,0 +1,117 @@
+[
+    {
+        "ntid": "-1",
+        "name": "n_junk",
+        "info": "inutilis\u00e9 - cas d'erreur"
+    },
+    {
+        "ntid": "1",
+        "name": "n_term",
+        "info": "Noeud de terme standard."
+    },
+    {
+        "ntid": "2",
+        "name": "n_form",
+        "info": "Noeud de terme fl\u00e9chi, si aucune information s\u00e9mantique particuli\u00e8re"
+    },
+    {
+        "ntid": "3",
+        "name": "n_definition",
+        "info": "inutilis\u00e9"
+    },
+    {
+        "ntid": "4",
+        "name": "n_pos",
+        "info": "Noeud de Part of Speech"
+    },
+    {
+        "ntid": "5",
+        "name": "n_concept",
+        "info": "Noeud de concept"
+    },
+    {
+        "ntid": "6",
+        "name": "n_flpot",
+        "info": "Noeud de potentiel de r\u00e9ponse pour une fonction lexicale "
+    },
+    {
+        "ntid": "7",
+        "name": "n_hub",
+        "info": "inutilis\u00e9"
+    },
+    {
+        "ntid": "8",
+        "name": "n_chunk",
+        "info": "Noeud d'aggr\u00e9gat"
+    },
+    {
+        "ntid": "9",
+        "name": "n_question",
+        "info": "Noeud de question = aggr\u00e9gat + relation cible"
+    },
+    {
+        "ntid": "10",
+        "name": "n_relation",
+        "info": "Noeud repr\u00e9sentant une relation (r\u00e9ification)"
+    },
+    {
+        "ntid": "11",
+        "name": "n_rule",
+        "info": "Noeud de r\u00e8gle"
+    },
+    {
+        "ntid": "12",
+        "name": "n_analogy",
+        "info": "Noeud d'analogie"
+    },
+    {
+        "ntid": "13",
+        "name": "n_commands",
+        "info": "Noeud de commandes (interne, pour bots et contributeurs)"
+    },
+    {
+        "ntid": "14",
+        "name": "n_synt_function",
+        "info": "Noeud de fonction syntaxique (GN, COD, COI, ...)"
+    },
+    {
+        "ntid": "18",
+        "name": "n_data",
+        "info": "Noeud d'informations lexicales/syntaxiques"
+    },
+    {
+        "ntid": "36",
+        "name": "n_data_pot",
+        "info": "Noeud d'informations s\u00e9mantiques"
+    },
+    {
+        "ntid": "200",
+        "name": "n_context",
+        "info": "Noeud de contexte : groupement de termes"
+    },
+    {
+        "ntid": "444",
+        "name": "n_link",
+        "info": "Noeud lien vers autres ressources (LOD)"
+    },
+    {
+        "ntid": "666",
+        "name": "n_AKI",
+        "info": "Noeud terme issu de TOTAKI"
+    },
+    {
+        "ntid": "777",
+        "name": "n_wikipedia",
+        "info": "Noeud terme issu de Wikipedia"
+    },
+    {
+        "ntid": "1002",
+        "name": "n_group",
+        "info": "Noeud de groupes de termes (pour exp\u00e9rience diverses)"
+    },
+    {
+        "ntid": "1003",
+        "name": "n_generic",
+        "info": "Noeud de failsafe - en principe pas d'instance."
+    }
+]
